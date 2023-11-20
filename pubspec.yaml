@@ -1,0 +1,45 @@
+name: stats_and_estates
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.1.2 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_svg: 2.0.9
+  cupertino_icons: 1.0.6
+  firebase_core: ^2.22.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/fonts/
+    - assets/icons/
+    - assets/images/
+  fonts: 
+    - family: CDBlack
+      fonts: 
+        - asset: assets/fonts/CinzelDecorative-Black.ttf
+    - family: CDBold
+      fonts:
+        - asset: assets/fonts/CinzelDecorative-Bold.ttf
+    - family: CDRegular
+      fonts:
+        - asset: assets/fonts/CinzelDecorative-Regular.ttf
+    - family: DMSansBold
+      fonts:
+        - asset: assets/fonts/DMSans-Bold.ttf
+    - family: DMSansMedium
+      fonts:
+        - asset: assets/fonts/DMSans-Medium.ttf
+    - family: DMSansRegular
+      fonts:
+        - asset: assets/fonts/DMSans-Regular.ttf

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "219193522369",
+    "project_id": "stats-and-estates",
+    "storage_bucket": "stats-and-estates.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219193522369:android:14c9e098af5daa54b9bc40",
+        "android_client_info": {
+          "package_name": "com.example.stats_and_estates"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWZWHWQaaB2EUc8umjAr5VZY4HoKEu_VQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
