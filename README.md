@@ -10,6 +10,7 @@ Stats & Estates is an innovative real estate mobile application designed to prov
 - **Area Statistics:** Access detailed information about specific areas, including mortality rates, population demographics, and crime rates.
 - **Save & Comparison:** Save preferred properties for later reference and easily compare different options.
 - **User Support:** Efficient user registration, profile management, and support services.
+- **Chat & Messaging:** Enables seamless communication between tenants and landlords within the application itself.
 
 ## Technology Stack
 
