@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 import 'package:stats_and_estates/src/screens/homepage.dart';
 import 'package:stats_and_estates/src/screens/signup_page.dart';
+import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
 import 'package:stats_and_estates/src/widgets/background_image.dart';
 import 'package:stats_and_estates/src/widgets/button_builder.dart';
 import 'package:stats_and_estates/src/widgets/fields/text_field_builder.dart';
@@ -18,6 +20,26 @@ class _LandingPageState extends State<LandingPage> {
   //Controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  //login user
+  void login() async {
+    final authService = Provider.of<AuthService>(context, listen: false);
+
+    try {
+      await authService.signInWithEmailAndPassword(
+        emailController.text,
+        passwordController.text,
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,32 +84,25 @@ class _LandingPageState extends State<LandingPage> {
                         PasswordField(controller: passwordController),
                         SizedBox(height: height * 0.04),
                         Center(
-                          child: CustomButton(
+                          //TODO
+                          child: MyButton(
+                            onPressed: login,
                             text: 'Login',
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const HomePage(),
-                                ),
-                              );
-                            },
-                            backgroundColor: buttonColor,
                           ),
                         ),
                         SizedBox(height: height * 0.25),
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: CustomButton(
+                          child: MyButton(
                             text: 'New User? Create Account',
                             onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignUpPage()),
+                                  builder: (context) => SignUpPage(),
+                                ),
                               );
                             },
-                            backgroundColor: buttonColor,
                           ),
                         ),
                       ],

@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:stats_and_estates/src/constants/colors.dart';
 
-class CustomButton extends StatelessWidget {
+class MyButton extends StatelessWidget {
+  final void Function()? onPressed;
   final String text;
-  final VoidCallback onPressed;
-  final Color backgroundColor;
-  final double screenWidth;
-  final double screenHeight;
 
-  const CustomButton({
+  const MyButton({
     Key? key,
-    required this.text,
     required this.onPressed,
-    required this.backgroundColor,
-    this.screenWidth = 0.14,
-    this.screenHeight = 0.018,
+    required this.text,
   }) : super(key: key);
 
   @override
@@ -24,7 +19,7 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor,
+        backgroundColor: buttonColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(40),
         ),

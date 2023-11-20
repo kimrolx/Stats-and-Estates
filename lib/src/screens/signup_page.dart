@@ -82,18 +82,11 @@ class SignUpPage extends StatelessWidget {
                         ConfirmPasswordField(
                             controller: confirmPasswordController),
                         SizedBox(height: height * 0.04),
+                        //TODO
                         Center(
-                          child: CustomButton(
-                            text: 'Sign Up',
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const HomePage(),
-                                ),
-                              );
-                            },
-                            backgroundColor: buttonColor,
+                          child: MyButton(
+                            onPressed: () {},
+                            text: 'Sign up',
                           ),
                         ),
                       ],
