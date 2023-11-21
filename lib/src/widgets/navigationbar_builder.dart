@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
+import 'package:stats_and_estates/src/screens/homepage.dart';
+import 'package:stats_and_estates/src/screens/user_page.dart';
 
 class MyNavigationBar extends StatefulWidget {
   const MyNavigationBar({Key? key}) : super(key: key);
@@ -10,22 +13,14 @@ class MyNavigationBar extends StatefulWidget {
 }
 
 class _MyNavigationBarState extends State<MyNavigationBar> {
-  int currentIndex = 0;
-
-  void onItemTapped(int index) {
-    setState(() {
-      currentIndex = index;
-    });
-  }
-
-  List<IconData> selectedIcons = [
+  static const List<IconData> selectedIcons = [
     CupertinoIcons.house_fill,
     CupertinoIcons.bookmark_fill,
     CupertinoIcons.chat_bubble_fill,
     CupertinoIcons.person_fill,
   ];
 
-  List<IconData> unselectedIcons = [
+  static const List<IconData> unselectedIcons = [
     CupertinoIcons.house,
     CupertinoIcons.bookmark,
     CupertinoIcons.chat_bubble,
@@ -35,6 +30,8 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+
+    int currentIndex = Provider.of<CurrentIndexProvider>(context).currentIndex;
 
     return ClipRRect(
       borderRadius: BorderRadius.only(
@@ -48,30 +45,70 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
         unselectedItemColor: Colors.white,
         iconSize: width * 0.065,
         currentIndex: currentIndex,
-        onTap: onItemTapped,
-        items: [
-          BottomNavigationBarItem(
-            icon:
-                Icon(currentIndex == 0 ? selectedIcons[0] : unselectedIcons[0]),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon:
-                Icon(currentIndex == 1 ? selectedIcons[1] : unselectedIcons[1]),
-            label: 'Favorites',
-          ),
-          BottomNavigationBarItem(
-            icon:
-                Icon(currentIndex == 2 ? selectedIcons[2] : unselectedIcons[2]),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
-            icon:
-                Icon(currentIndex == 3 ? selectedIcons[3] : unselectedIcons[3]),
-            label: 'Profile',
-          ),
-        ],
+        onTap: (index) => _handleNavigation(context, currentIndex, index),
+        items: _buildBottomNavigationBarItems(currentIndex),
       ),
     );
+  }
+
+  void _handleNavigation(BuildContext context, int currentIndex, int index) {
+    Provider.of<CurrentIndexProvider>(context, listen: false)
+        .updateIndex(index);
+
+    if (currentIndex != index) {
+      switch (index) {
+        case 0:
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
+          break;
+        // case 1:
+        //   Navigator.of(context).pushReplacement(
+        //     MaterialPageRoute(builder: (context) => const FavoritesPage()),
+        //   );
+        //   break;
+        // case 2:
+        //   Navigator.of(context).pushReplacement(
+        //     MaterialPageRoute(builder: (context) => const ChatPage()),
+        //   );
+        //   break;
+        case 3:
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const UserPage()),
+          );
+          break;
+      }
+    }
+  }
+
+  List<BottomNavigationBarItem> _buildBottomNavigationBarItems(
+      int currentIndex) {
+    return [
+      _buildNavigationBarItem(currentIndex, 0, 'Home'),
+      _buildNavigationBarItem(currentIndex, 1, 'Favorites'),
+      _buildNavigationBarItem(currentIndex, 2, 'Chat'),
+      _buildNavigationBarItem(currentIndex, 3, 'User'),
+    ];
+  }
+
+  BottomNavigationBarItem _buildNavigationBarItem(
+      int currentIndex, int index, String label) {
+    return BottomNavigationBarItem(
+      icon: Icon(currentIndex == index
+          ? selectedIcons[index]
+          : unselectedIcons[index]),
+      label: label,
+    );
+  }
+}
+
+class CurrentIndexProvider with ChangeNotifier {
+  int _currentIndex = 0;
+
+  int get currentIndex => _currentIndex;
+
+  void updateIndex(int newIndex) {
+    _currentIndex = newIndex;
+    notifyListeners();
   }
 }
