@@ -19,7 +19,7 @@ class _UserPageState extends State<UserPage> {
   void logout() {
     final authService = Provider.of<AuthService>(context, listen: false);
 
-    authService.logout();
+    authService.signOut();
   }
 
   @override
@@ -152,7 +152,7 @@ class _UserPageState extends State<UserPage> {
                 child: Text(
                   'Log Out',
                   style: TextStyle(
-                    fontFamily: 'DMSansMedium',
+                    fontFamily: 'DMSansBold',
                     fontSize: width * 0.045,
                   ),
                 ),

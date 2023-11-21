@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stats_and_estates/src/screens/homepage.dart';
+import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
 import 'package:stats_and_estates/src/widgets/back_button_builder.dart';
 import 'package:stats_and_estates/src/widgets/background_image_builder.dart';
 import 'package:stats_and_estates/src/widgets/button_builder.dart';
@@ -6,15 +9,50 @@ import 'package:stats_and_estates/src/widgets/fields/confirm_password_field.dart
 import 'package:stats_and_estates/src/widgets/fields/password_field.dart';
 import 'package:stats_and_estates/src/widgets/fields/text_field_builder.dart';
 
-class SignUpPage extends StatelessWidget {
-  SignUpPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
   //Controllers
-  final nameController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
   final emailController = TextEditingController();
   final numberController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
+  //Sign up user
+  void signUp() async {
+    if (passwordController.text != confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Passwords do not match!'),
+        ),
+      );
+      return;
+    }
+
+    final authService = Provider.of<AuthService>(context, listen: false);
+
+    try {
+      await authService.createUserWithEmailAndPassword(
+        emailController.text,
+        passwordController.text,
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +100,13 @@ class SignUpPage extends StatelessWidget {
                         ),
                         SizedBox(height: height * 0.05),
                         MyTextField(
-                          controller: nameController,
-                          labelText: 'Name',
+                          controller: firstNameController,
+                          labelText: 'First Name',
+                        ),
+                        SizedBox(height: height * 0.03),
+                        MyTextField(
+                          controller: lastNameController,
+                          labelText: 'Last Name',
                         ),
                         SizedBox(height: height * 0.03),
                         MyTextField(
@@ -81,10 +124,9 @@ class SignUpPage extends StatelessWidget {
                         ConfirmPasswordField(
                             controller: confirmPasswordController),
                         SizedBox(height: height * 0.04),
-                        //TODO
                         Center(
                           child: MyButton(
-                            onPressed: () {},
+                            onPressed: signUp,
                             text: 'Sign up',
                           ),
                         ),
