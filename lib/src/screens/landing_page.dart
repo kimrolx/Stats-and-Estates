@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 //import 'package:stats_and_estates/src/screens/homepage.dart';
 import 'package:stats_and_estates/src/screens/signup_page.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
-import 'package:stats_and_estates/src/widgets/background_image.dart';
+import 'package:stats_and_estates/src/widgets/background_image_builder.dart';
 import 'package:stats_and_estates/src/widgets/button_builder.dart';
 import 'package:stats_and_estates/src/widgets/fields/text_field_builder.dart';
 import 'package:stats_and_estates/src/widgets/fields/password_field.dart';

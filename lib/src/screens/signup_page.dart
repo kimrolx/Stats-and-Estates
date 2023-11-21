@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stats_and_estates/src/screens/homepage.dart';
 import 'package:stats_and_estates/src/widgets/back_button_builder.dart';
-import 'package:stats_and_estates/src/widgets/background_image.dart';
+import 'package:stats_and_estates/src/widgets/background_image_builder.dart';
 import 'package:stats_and_estates/src/widgets/button_builder.dart';
 import 'package:stats_and_estates/src/widgets/fields/confirm_password_field.dart';
 import 'package:stats_and_estates/src/widgets/fields/password_field.dart';

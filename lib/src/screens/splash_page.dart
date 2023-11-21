@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _navigateToAuthGate() async {
     await Future.delayed(
-      const Duration(milliseconds: 1500),
+      const Duration(milliseconds: 500),
       () {
         Navigator.pushReplacement(
           context,

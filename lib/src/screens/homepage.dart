@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               onPressed: () {
                                 setState(() {
-                                  //TODO
+                                  //TODO Search
                                 });
                               },
                             ),
@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
         foregroundColor: Colors.white,
         tooltip: 'View Map',
         onPressed: () {
-          //TODO
+          //TODO View Map
         },
         child: Icon(
           CupertinoIcons.map_pin_ellipse,

@@ -31,9 +31,8 @@ class MyButton extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          fontFamily: 'DMSansMedium',
+          fontFamily: 'DMSansBold',
           fontSize: screenWidth * 0.04,
-          fontWeight: FontWeight.w700,
         ),
       ),
     );
