@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stats_and_estates/src/constants/colors.dart';
 import 'package:stats_and_estates/src/screens/homepage.dart';
 import 'package:stats_and_estates/src/widgets/back_button_builder.dart';
 import 'package:stats_and_estates/src/widgets/background_image.dart';
@@ -25,7 +24,8 @@ class SignUpPage extends StatelessWidget {
 
     return Stack(
       children: [
-        const BackgroundImage(imagePath: 'assets/images/signup_background.png'),
+        const MyBackgroundImage(
+            imagePath: 'assets/images/signup_background.png'),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: SafeArea(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 import 'package:stats_and_estates/src/data/listing_details_provider.dart';
 import 'package:stats_and_estates/src/models/listing_details.dart';
@@ -50,8 +51,8 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
             MyCarousel(imagePaths: images),
             Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: width * 0.05,
-                vertical: height * 0.02,
+                horizontal: width * 0.08,
+                vertical: height * 0.03,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,10 +77,76 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                 height: height * 0.5,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: themeBackground,
+                    color: backgroundColor,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(60),
                       topRight: Radius.circular(60),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: width * 0.08,
+                      vertical: height * 0.03,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.listingsContent.name,
+                            style: TextStyle(
+                              fontFamily: 'DMSansBold',
+                              fontSize: width * 0.065,
+                            ),
+                          ),
+                          const Gap(10),
+                          Text(
+                            widget.listingsContent.address,
+                            style: TextStyle(
+                              fontFamily: 'DMSansRegular',
+                              fontSize: width * 0.04,
+                            ),
+                          ),
+                          const Gap(2),
+                          Text(
+                            widget.listingDetails.landmark,
+                            style: TextStyle(
+                              fontFamily: 'DMSansRegular',
+                              fontSize: width * 0.04,
+                            ),
+                          ),
+                          const Gap(2),
+                          Text(
+                            'Minimum of ${widget.listingDetails.contract}',
+                            style: TextStyle(
+                              fontFamily: 'DMSansBold',
+                              fontSize: width * 0.04,
+                            ),
+                          ),
+                          const Gap(20),
+                          Row(
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                color: Colors.black,
+                              ),
+                              const Gap(10),
+                              Container(
+                                width: 50,
+                                height: 50,
+                                color: Colors.black,
+                              ),
+                              const Gap(10),
+                              Container(
+                                width: 50,
+                                height: 50,
+                                color: Colors.black,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

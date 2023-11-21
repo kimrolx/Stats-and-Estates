@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 
-class BackgroundImage extends StatelessWidget {
+class MyBackgroundImage extends StatelessWidget {
   final String imagePath;
 
-  const BackgroundImage({Key? key, required this.imagePath}) : super(key: key);
+  const MyBackgroundImage({Key? key, required this.imagePath})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: themeBackground,
+      backgroundColor: backgroundColor,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(

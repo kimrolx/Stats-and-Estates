@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stats_and_estates/src/constants/colors.dart';
-import 'package:stats_and_estates/src/screens/homepage.dart';
+//import 'package:stats_and_estates/src/screens/homepage.dart';
 import 'package:stats_and_estates/src/screens/signup_page.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
 import 'package:stats_and_estates/src/widgets/background_image.dart';
@@ -21,7 +20,7 @@ class _LandingPageState extends State<LandingPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  //login user
+  //Login user
   void login() async {
     final authService = Provider.of<AuthService>(context, listen: false);
 
@@ -48,8 +47,9 @@ class _LandingPageState extends State<LandingPage> {
 
     return Stack(
       children: [
-        const BackgroundImage(
-            imagePath: 'assets/images/landing_page_background.png'),
+        const MyBackgroundImage(
+          imagePath: 'assets/images/landing_page_background.png',
+        ),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: SafeArea(

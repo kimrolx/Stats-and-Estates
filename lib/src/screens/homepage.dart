@@ -31,8 +31,7 @@ class _HomePageState extends State<HomePage> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      bottomNavigationBar: const MyNavigationBar(),
-      backgroundColor: themeBackground,
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -125,6 +124,20 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: const MyNavigationBar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: navigationBarColor,
+        foregroundColor: Colors.white,
+        tooltip: 'View Map',
+        onPressed: () {
+          //TODO
+        },
+        child: Icon(
+          CupertinoIcons.map_pin_ellipse,
+          size: width * 0.08,
         ),
       ),
     );

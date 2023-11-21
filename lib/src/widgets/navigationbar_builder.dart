@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 
 class MyNavigationBar extends StatefulWidget {
-  const MyNavigationBar({super.key});
+  const MyNavigationBar({Key? key}) : super(key: key);
 
   @override
   State<MyNavigationBar> createState() => _MyNavigationBarState();
@@ -45,7 +45,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
         type: BottomNavigationBarType.fixed,
         backgroundColor: navigationBarColor,
         selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.black,
+        unselectedItemColor: Colors.white,
         iconSize: width * 0.065,
         currentIndex: currentIndex,
         onTap: onItemTapped,
