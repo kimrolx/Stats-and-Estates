@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
-import 'package:stats_and_estates/src/widgets/fields/text_field_builder.dart';
 import 'package:stats_and_estates/src/widgets/fields/user_info_builder.dart';
 
 class MyProfilePage extends StatefulWidget {
@@ -40,7 +39,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                     width: width,
                   ),
                   Image.asset(
-                    'assets/images/property1.jpg',
+                    'assets/images/property1/property1.jpg',
                     width: width,
                     height: height * 0.2,
                     fit: BoxFit.cover,
@@ -50,8 +49,8 @@ class _MyProfilePageState extends State<MyProfilePage> {
                     left: width * 0.4,
                     child: CircleAvatar(
                       radius: width * 0.1,
-                      backgroundImage:
-                          const AssetImage('assets/images/room.jpg'),
+                      backgroundImage: const AssetImage(
+                          'assets/images/signup_background.png'),
                     ),
                   ),
                 ],

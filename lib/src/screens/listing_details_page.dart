@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 import 'package:stats_and_estates/src/data/listing_details_provider.dart';
 import 'package:stats_and_estates/src/models/listing_details.dart';
 import 'package:stats_and_estates/src/models/listings.dart';
+import 'package:stats_and_estates/src/widgets/amenities_builder.dart';
 import 'package:stats_and_estates/src/widgets/back_button_builder.dart';
 import 'package:stats_and_estates/src/widgets/carousel_builder.dart';
 import 'package:stats_and_estates/src/widgets/favorites_builder.dart';
@@ -89,6 +91,7 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                       vertical: height * 0.03,
                     ),
                     child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -99,7 +102,7 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                               fontSize: width * 0.065,
                             ),
                           ),
-                          const Gap(10),
+                          Gap(height * 0.015),
                           Text(
                             widget.listingsContent.address,
                             style: TextStyle(
@@ -107,7 +110,7 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                               fontSize: width * 0.04,
                             ),
                           ),
-                          const Gap(2),
+                          Gap(height * 0.0025),
                           Text(
                             widget.listingDetails.landmark,
                             style: TextStyle(
@@ -115,7 +118,7 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                               fontSize: width * 0.04,
                             ),
                           ),
-                          const Gap(2),
+                          Gap(height * 0.0025),
                           Text(
                             'Minimum of ${widget.listingDetails.contract}',
                             style: TextStyle(
@@ -123,28 +126,20 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                               fontSize: width * 0.04,
                             ),
                           ),
-                          const Gap(20),
-                          // TODO
-                          Row(
-                            children: [
-                              Container(
-                                width: 50,
-                                height: 50,
-                                color: Colors.black,
-                              ),
-                              const Gap(10),
-                              Container(
-                                width: 50,
-                                height: 50,
-                                color: Colors.black,
-                              ),
-                              const Gap(10),
-                              Container(
-                                width: 50,
-                                height: 50,
-                                color: Colors.black,
-                              ),
-                            ],
+                          Gap(height * 0.025),
+                          MyAmenities(
+                            svgAssetPath: 'assets/icons/bed.svg',
+                            text: widget.listingDetails.amenities0,
+                          ),
+                          Gap(height * 0.025),
+                          MyAmenities(
+                            svgAssetPath: 'assets/icons/shower.svg',
+                            text: widget.listingDetails.amenities1,
+                          ),
+                          Gap(height * 0.025),
+                          MyAmenities(
+                            svgAssetPath: 'assets/icons/kitchen-room.svg',
+                            text: widget.listingDetails.amenities2,
                           ),
                         ],
                       ),

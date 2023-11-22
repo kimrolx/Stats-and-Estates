@@ -72,7 +72,8 @@ class _UserPageState extends State<UserPage> {
                         radius: width * 0.08,
                         backgroundImage:
                             //TODO Profile Image
-                            const AssetImage('assets/images/room.jpg'),
+                            const AssetImage(
+                                'assets/images/landing_page_background.png'),
                       ),
                       Gap(width * 0.035),
                       Column(

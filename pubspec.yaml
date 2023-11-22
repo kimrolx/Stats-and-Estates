@@ -28,6 +28,11 @@ flutter:
     - assets/fonts/
     - assets/icons/
     - assets/images/
+    - assets/images/property1/
+    - assets/images/property2/
+    - assets/images/property3/
+    - assets/images/property4/
+    
   fonts: 
     - family: CDBlack
       fonts: 
