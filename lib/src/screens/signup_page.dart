@@ -43,6 +43,12 @@ class _SignUpPageState extends State<SignUpPage> {
         emailController.text,
         passwordController.text,
       );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

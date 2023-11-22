@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
+import 'package:stats_and_estates/src/screens/landing_page.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
 import 'package:stats_and_estates/src/widgets/navigationbar_builder.dart';
 import 'package:stats_and_estates/src/widgets/user_components_builder.dart';
@@ -18,8 +19,13 @@ class _UserPageState extends State<UserPage> {
   //Logout User
   void logout() {
     final authService = Provider.of<AuthService>(context, listen: false);
-
     authService.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LandingPage(),
+      ),
+    );
   }
 
   @override
@@ -144,6 +150,7 @@ class _UserPageState extends State<UserPage> {
                 onPressed: logout,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: buttonColor,
+                  foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

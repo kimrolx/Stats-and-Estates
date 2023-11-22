@@ -13,26 +13,27 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: buttonColor,
+        foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(40),
         ),
         padding: EdgeInsets.symmetric(
-          horizontal: screenWidth * 0.14,
-          vertical: screenHeight * 0.018,
+          horizontal: width * 0.14,
+          vertical: height * 0.019,
         ),
       ),
       child: Text(
         text,
         style: TextStyle(
           fontFamily: 'DMSansBold',
-          fontSize: screenWidth * 0.04,
+          fontSize: width * 0.038,
         ),
       ),
     );

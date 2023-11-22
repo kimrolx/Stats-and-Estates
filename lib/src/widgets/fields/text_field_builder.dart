@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stats_and_estates/src/constants/colors.dart';
 
 class MyTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -37,7 +38,7 @@ class MyTextField extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(50),
-            borderSide: const BorderSide(color: Colors.blue),
+            borderSide: BorderSide(color: splashColor),
           ),
         ),
       ),

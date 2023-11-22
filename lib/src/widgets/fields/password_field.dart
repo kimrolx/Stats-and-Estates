@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stats_and_estates/src/constants/colors.dart';
 
 class PasswordField extends StatefulWidget {
   final TextEditingController controller;
@@ -41,7 +42,7 @@ class _PasswordFieldState extends State<PasswordField> {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(50),
-            borderSide: const BorderSide(color: Colors.blue),
+            borderSide: BorderSide(color: splashColor),
           ),
           suffixIcon: IconButton(
             icon: Icon(
