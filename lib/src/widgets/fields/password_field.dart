@@ -56,6 +56,7 @@ class _PasswordFieldState extends State<PasswordField> {
             },
           ),
         ),
+        cursorColor: splashColor,
       ),
     );
   }

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 
-class MyTextField extends StatelessWidget {
+class MyUserInfoField extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
-
-  const MyTextField({
+  const MyUserInfoField({
     super.key,
     required this.controller,
     required this.labelText,
@@ -14,13 +13,13 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-
     return Form(
       child: TextFormField(
+        readOnly: true,
         controller: controller,
         style: TextStyle(
           fontFamily: 'DMSansRegular',
-          color: Colors.white,
+          color: buttonColor,
           fontSize: width * 0.04,
         ),
         decoration: InputDecoration(
@@ -29,16 +28,16 @@ class MyTextField extends StatelessWidget {
             fontFamily: 'DMSansRegular',
             fontSize: width * 0.055,
             fontWeight: FontWeight.w500,
-            color: Colors.white,
+            color: buttonColor,
           ),
           floatingLabelBehavior: FloatingLabelBehavior.always,
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50),
-            borderSide: const BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: buttonColor),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50),
-            borderSide: BorderSide(color: splashColor),
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: buttonColor),
           ),
         ),
         cursorColor: splashColor,

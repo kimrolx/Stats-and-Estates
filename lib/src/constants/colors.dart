@@ -11,3 +11,5 @@ Color backgroundColor = const Color.fromRGBO(221, 184, 146, 1.0);
 Color searchBarColor = const Color.fromRGBO(205, 178, 161, 1.0);
 
 Color splashColor = const Color.fromRGBO(230, 204, 178, 1.0);
+
+Color userSheet = const Color.fromRGBO(237, 224, 212, 1.0);

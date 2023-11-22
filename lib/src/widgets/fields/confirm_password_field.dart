@@ -55,6 +55,7 @@ class _ConfirmPasswordFieldState extends State<ConfirmPasswordField> {
             },
           ),
         ),
+        cursorColor: splashColor,
       ),
     );
   }

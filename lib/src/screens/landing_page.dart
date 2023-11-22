@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//import 'package:stats_and_estates/src/screens/homepage.dart';
+import 'package:stats_and_estates/src/screens/homepage.dart';
 import 'package:stats_and_estates/src/screens/signup_page.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
 import 'package:stats_and_estates/src/widgets/background_image_builder.dart';
@@ -28,6 +28,12 @@ class _LandingPageState extends State<LandingPage> {
       await authService.signInWithEmailAndPassword(
         emailController.text,
         passwordController.text,
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -84,7 +90,6 @@ class _LandingPageState extends State<LandingPage> {
                         PasswordField(controller: passwordController),
                         SizedBox(height: height * 0.04),
                         Center(
-                          //TODO
                           child: MyButton(
                             onPressed: login,
                             text: 'Login',

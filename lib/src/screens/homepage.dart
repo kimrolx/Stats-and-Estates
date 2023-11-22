@@ -87,6 +87,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
+                        cursorColor: buttonColor,
                       ),
                     ),
                   ],

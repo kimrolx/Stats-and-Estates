@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 import 'package:stats_and_estates/src/screens/landing_page.dart';
+import 'package:stats_and_estates/src/screens/profile_page.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
 import 'package:stats_and_estates/src/widgets/navigationbar_builder.dart';
 import 'package:stats_and_estates/src/widgets/user_components_builder.dart';
@@ -37,7 +38,7 @@ class _UserPageState extends State<UserPage> {
       backgroundColor: backgroundColor,
       body: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: width * 0.055,
+          horizontal: width * 0.05,
           vertical: height * 0.035,
         ),
         child: Column(
@@ -48,7 +49,12 @@ class _UserPageState extends State<UserPage> {
                 padding: EdgeInsets.only(bottom: height * 0.035),
                 child: ElevatedButton(
                   onPressed: () {
-                    //TODO Profile Routing
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MyProfilePage(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: splashColor,
