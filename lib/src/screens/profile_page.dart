@@ -64,6 +64,13 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: userSheet,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.5),
+                        blurRadius: 2,
+                        offset: const Offset(0, 0.5),
+                      ),
+                    ],
                   ),
                   width: width * 1,
                   child: Padding(

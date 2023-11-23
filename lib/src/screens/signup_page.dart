@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:stats_and_estates/src/screens/homepage.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
@@ -134,6 +135,29 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: MyButton(
                             onPressed: signUp,
                             text: 'Sign up',
+                          ),
+                        ),
+                        Gap(height * 0.07),
+                        Center(
+                          child: Text(
+                            'By signing up, you agree to our',
+                            style: TextStyle(
+                              fontFamily: 'DMSansBold',
+                              fontSize: width * 0.035,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Text(
+                            'Terms of Use and Privacy Policy',
+                            style: TextStyle(
+                                fontFamily: 'DMSansBold',
+                                fontSize: width * 0.035,
+                                color: Colors.white,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.white,
+                                decorationThickness: width * 0.005),
                           ),
                         ),
                       ],

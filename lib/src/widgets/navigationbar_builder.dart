@@ -16,14 +16,14 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   static const List<IconData> selectedIcons = [
     CupertinoIcons.house_fill,
     CupertinoIcons.bookmark_fill,
-    CupertinoIcons.chat_bubble_fill,
+    CupertinoIcons.mail_solid,
     CupertinoIcons.person_fill,
   ];
 
   static const List<IconData> unselectedIcons = [
     CupertinoIcons.house,
     CupertinoIcons.bookmark,
-    CupertinoIcons.chat_bubble,
+    CupertinoIcons.mail,
     CupertinoIcons.person,
   ];
 
@@ -59,7 +59,27 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
       switch (index) {
         case 0:
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomePage()),
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  const HomePage(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(-1.0, 0.0);
+                const end = Offset.zero;
+                const curve = Curves.easeInOutQuad;
+                return SlideTransition(
+                  position: Tween(begin: begin, end: end)
+                      .chain(CurveTween(curve: curve))
+                      .animate(
+                        CurvedAnimation(
+                          parent: animation,
+                          curve: const Interval(0.0, 0.45, curve: curve),
+                        ),
+                      ),
+                  child: child,
+                );
+              },
+            ),
           );
           break;
         // case 1:
@@ -74,7 +94,27 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
         //   break;
         case 3:
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const UserPage()),
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  const UserPage(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0.0);
+                const end = Offset.zero;
+                const curve = Curves.easeInOutQuad;
+                return SlideTransition(
+                  position: Tween(begin: begin, end: end)
+                      .chain(CurveTween(curve: curve))
+                      .animate(
+                        CurvedAnimation(
+                          parent: animation,
+                          curve: const Interval(0.0, 0.45, curve: curve),
+                        ),
+                      ),
+                  child: child,
+                );
+              },
+            ),
           );
           break;
       }
