@@ -123,11 +123,6 @@ class _UserPageState extends State<UserPage> {
                 ),
               ),
             ),
-            Divider(
-              color: Colors.white,
-              thickness: width * 0.008,
-            ),
-            Gap(height * 0.04),
             Text(
               'Profile',
               style: TextStyle(
@@ -143,6 +138,10 @@ class _UserPageState extends State<UserPage> {
                 text: 'Become a Landlord',
                 icon: CupertinoIcons.person_fill,
               ),
+            ),
+            Gap(height * 0.01),
+            Divider(
+              color: userSheet,
             ),
             Gap(height * 0.055),
             Text(
@@ -161,7 +160,11 @@ class _UserPageState extends State<UserPage> {
                 icon: CupertinoIcons.bell_fill,
               ),
             ),
-            Gap(height * 0.015),
+            Gap(height * 0.01),
+            Divider(
+              color: userSheet,
+            ),
+            Gap(height * 0.01),
             InkWell(
               // TODO Feedback Route
               onTap: () {},
@@ -170,6 +173,11 @@ class _UserPageState extends State<UserPage> {
                 icon: CupertinoIcons.envelope_fill,
               ),
             ),
+            Gap(height * 0.01),
+            Divider(
+              color: userSheet,
+            ),
+            Gap(height * 0.01),
             const Spacer(),
             Center(
               child: ElevatedButton(

@@ -23,47 +23,61 @@ class FavoritesPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: Center(
-          child: Text(
-            'Favorites',
-            style: TextStyle(
-              fontFamily: 'BabasNeueRegular',
-              fontSize: width * 0.15,
-              color: Colors.white,
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Colors.transparent,
+            expandedHeight: height * 0.15,
+            floating: true,
+            stretch: true,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: false,
+              title: Text(
+                'Favorites',
+                style: TextStyle(
+                  fontFamily: 'BabasNeueRegular',
+                  fontSize: width * 0.1,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: width * 0.035, vertical: height * 0.01),
-        child: MasonryGridView.builder(
-          gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
-          mainAxisSpacing: height * 0.035,
-          crossAxisSpacing: width * 0.035,
-          itemCount: 4,
-          itemBuilder: (context, index) => GestureDetector(
-            onTap: () {
-              ListingsContent selectedListing = favoritesData[index];
-              ListingDetails selectedDetails = listingDetails[index];
+          SliverPadding(
+            padding: EdgeInsets.only(
+              left: width * 0.035,
+              right: width * 0.035,
+              bottom: height * 0.035,
+            ),
+            sliver: SliverMasonryGrid.count(
+              crossAxisCount: 2,
+              mainAxisSpacing: height * 0.035,
+              crossAxisSpacing: width * 0.035,
+              itemBuilder: (BuildContext context, int index) {
+                ListingsContent selectedListing = favoritesData[index];
+                ListingDetails selectedDetails = listingDetails[index];
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ListingDetailsPage(
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ListingDetailsPage(
+                          listingsContent: selectedListing,
+                          listingDetails: selectedDetails,
+                        ),
+                      ),
+                    );
+                  },
+                  child: MyFavoritesContainer(
                     listingsContent: selectedListing,
-                    listingDetails: selectedDetails,
                   ),
-                ),
-              );
-            },
-            child: MyFavoritesContainer(listingsContent: favoritesData[index]),
-          ),
-        ),
+                );
+              },
+              childCount: 4,
+            ),
+          )
+        ],
       ),
       bottomNavigationBar: const MyNavigationBar(),
     );
