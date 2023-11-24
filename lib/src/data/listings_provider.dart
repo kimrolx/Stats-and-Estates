@@ -23,8 +23,14 @@ class ListingsProvider {
       ),
       ListingsContent(
         image: 'assets/images/property4/property4.jpg',
-        name: 'Accomodations for Rent',
-        address: 'IT Park',
+        name: 'Studio Room',
+        address: 'Victor Village, Punta Princesa, Cebu City',
+        cost: 'PHP 4000/month',
+      ),
+      ListingsContent(
+        image: 'assets/images/property5/property5.jpg',
+        name: 'Studio Room',
+        address: 'Victor Village, Punta Princesa, Cebu City',
         cost: 'PHP 4000/month',
       ),
     ];

@@ -49,10 +49,28 @@ class _UserPageState extends State<UserPage> {
                 padding: EdgeInsets.only(bottom: height * 0.035),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MyProfilePage(),
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const ProfilePage(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.fastOutSlowIn;
+                          return SlideTransition(
+                            position: Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve))
+                                .animate(
+                                  CurvedAnimation(
+                                    parent: animation,
+                                    curve: const Interval(0.0, 0.55),
+                                  ),
+                                ),
+                            child: child,
+                          );
+                        },
+                        transitionDuration: const Duration(milliseconds: 500),
                       ),
                     );
                   },
@@ -65,6 +83,7 @@ class _UserPageState extends State<UserPage> {
                       horizontal: width * 0.035,
                       vertical: height * 0.02,
                     ),
+                    elevation: 5,
                   ),
                   child: Row(
                     children: [

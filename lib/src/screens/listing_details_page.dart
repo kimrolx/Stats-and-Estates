@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
-import 'package:stats_and_estates/src/data/listing_details_provider.dart';
 import 'package:stats_and_estates/src/models/listing_details.dart';
 import 'package:stats_and_estates/src/models/listings.dart';
 import 'package:stats_and_estates/src/widgets/amenities_builder.dart';
 import 'package:stats_and_estates/src/widgets/back_button_builder.dart';
 import 'package:stats_and_estates/src/widgets/carousel_builder.dart';
-import 'package:stats_and_estates/src/widgets/favorites_builder.dart';
+import 'package:stats_and_estates/src/widgets/favorite_button_builder.dart';
 import 'package:stats_and_estates/src/widgets/post_info_builder.dart';
 
 class ListingDetailsPage extends StatefulWidget {
@@ -21,10 +20,6 @@ class ListingDetailsPage extends StatefulWidget {
 }
 
 class _ListingDetailsPageState extends State<ListingDetailsPage> {
-  //Listing Details
-  List<ListingDetails> listingDetails =
-      ListingDetailsProvider.getListingsDetails();
-
   bool isBookMarked = false;
 
   @override
@@ -160,14 +155,15 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
               ),
             ),
             Positioned(
-                left: width * 0.05,
-                right: width * 0.05,
-                bottom: height * 0.01,
-                child: MyLandlordPost(
-                  image: 'assets/images/signup_background.png',
-                  name: 'Kim Berame',
-                  date: 'November 17, 2023',
-                )),
+              left: width * 0.05,
+              right: width * 0.05,
+              bottom: height * 0.01,
+              child: const MyLandlordPost(
+                image: 'assets/images/signup_background.png',
+                name: 'Kim Berame',
+                date: 'November 17, 2023',
+              ),
+            ),
           ],
         ),
       ),

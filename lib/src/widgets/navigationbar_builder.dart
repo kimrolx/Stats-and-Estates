@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
+import 'package:stats_and_estates/src/screens/favorites_page.dart';
 import 'package:stats_and_estates/src/screens/homepage.dart';
 import 'package:stats_and_estates/src/screens/user_page.dart';
 
@@ -66,27 +67,28 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
                   (context, animation, secondaryAnimation, child) {
                 const begin = Offset(-1.0, 0.0);
                 const end = Offset.zero;
-                const curve = Curves.easeInOutQuad;
+                const curve = Curves.fastOutSlowIn;
                 return SlideTransition(
                   position: Tween(begin: begin, end: end)
                       .chain(CurveTween(curve: curve))
                       .animate(
                         CurvedAnimation(
                           parent: animation,
-                          curve: const Interval(0.0, 0.45, curve: curve),
+                          curve: const Interval(0.0, 0.45),
                         ),
                       ),
                   child: child,
                 );
               },
+              transitionDuration: const Duration(milliseconds: 400),
             ),
           );
           break;
-        // case 1:
-        //   Navigator.of(context).pushReplacement(
-        //     MaterialPageRoute(builder: (context) => const FavoritesPage()),
-        //   );
-        //   break;
+        case 1:
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const FavoritesPage()),
+          );
+          break;
         // case 2:
         //   Navigator.of(context).pushReplacement(
         //     MaterialPageRoute(builder: (context) => const ChatPage()),
@@ -101,19 +103,20 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
                   (context, animation, secondaryAnimation, child) {
                 const begin = Offset(1.0, 0.0);
                 const end = Offset.zero;
-                const curve = Curves.easeInOutQuad;
+                const curve = Curves.fastOutSlowIn;
                 return SlideTransition(
                   position: Tween(begin: begin, end: end)
                       .chain(CurveTween(curve: curve))
                       .animate(
                         CurvedAnimation(
                           parent: animation,
-                          curve: const Interval(0.0, 0.45, curve: curve),
+                          curve: const Interval(0.0, 0.45),
                         ),
                       ),
                   child: child,
                 );
               },
+              transitionDuration: const Duration(milliseconds: 400),
             ),
           );
           break;

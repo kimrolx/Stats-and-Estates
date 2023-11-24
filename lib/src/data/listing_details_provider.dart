@@ -16,7 +16,8 @@ class ListingDetailsProvider {
         amenities2: '1 Kitchen per accomodation',
       ),
       ListingDetails(
-        image0: 'assets/images/property2/property2.jpeg',
+        image0:
+            'assets/images/property2/400167135_860964838858433_4374380127210772906_n.jpg',
         image1:
             'assets/images/property2/346636920_277239007977051_5982567103548575019_n.jpg',
         image2:
@@ -59,7 +60,24 @@ class ListingDetailsProvider {
             'assets/images/property4/380697319_3595139370756932_7017007439140803308_n.jpg',
         image4:
             'assets/images/property4/380701327_3595140064090196_5965678909070167505_n.jpg',
-        landmark: 'Near first entrance of IT Park',
+        landmark: 'Near Shell Gasoline Station',
+        contract: '1-Year Contract',
+        amenities0: '1 Bedroom (1 bed) per room',
+        amenities1: '1 Comfort room per room',
+        amenities2: '1 Kitchen per room',
+      ),
+      ListingDetails(
+        image0:
+            'assets/images/property5/399916063_1259774688052674_5022638646927633596_n.jpg',
+        image1:
+            'assets/images/property5/400676000_3614563862155994_1322621878884451577_n.jpg',
+        image2:
+            'assets/images/property5/400761288_315664127900354_7592056492581735115_n.jpg',
+        image3:
+            'assets/images/property5/403411501_849919146846606_7806229635441196868_n.jpg',
+        image4:
+            'assets/images/property5/403422002_1717601311982156_3602342994320382017_n.jpg',
+        landmark: 'Near Shell Gasoline Station',
         contract: '1-Year Contract',
         amenities0: '1 Bedroom (1 bed) per room',
         amenities1: '1 Comfort room per room',
