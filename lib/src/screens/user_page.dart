@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -17,6 +19,47 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  //Controllers
+  final nameController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  Future<void> loadUserData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        //Retrieve User Email
+        QuerySnapshot<Map<String, dynamic>> querySnapshot =
+            await FirebaseFirestore.instance
+                .collection('users')
+                .where('email', isEqualTo: user.email)
+                .limit(1)
+                .get();
+
+        //Check if the query returned any documents
+        if (querySnapshot.docs.isNotEmpty) {
+          DocumentSnapshot<Map<String, dynamic>> userDoc =
+              querySnapshot.docs.first;
+
+          //Update the controller values with the retrieved data
+          String firstName = userDoc['first name'] ?? '';
+          String lastName = userDoc['last name'] ?? '';
+
+          setState(() {
+            nameController.text = '$firstName $lastName';
+          });
+        }
+      }
+    } catch (e) {
+      print('Error loading user data: $e');
+    }
+  }
+
   //Logout User
   void logout() {
     final authService = Provider.of<AuthService>(context, listen: false);
@@ -27,10 +70,12 @@ class _UserPageState extends State<UserPage> {
         builder: (context) => const LandingPage(),
       ),
     );
+    Provider.of<CurrentIndexProvider>(context, listen: false).updateIndex(0);
   }
 
   @override
   Widget build(BuildContext context) {
+    print('Name: ${nameController.text}');
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -99,7 +144,7 @@ class _UserPageState extends State<UserPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Sheian Neil Mary Intes',
+                            nameController.text,
                             style: TextStyle(
                               fontFamily: 'DMSansBold',
                               fontSize: width * 0.045,
@@ -203,19 +248,6 @@ class _UserPageState extends State<UserPage> {
         ),
       ),
       bottomNavigationBar: const MyNavigationBar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: navigationBarColor,
-        foregroundColor: Colors.white,
-        tooltip: 'View Map',
-        onPressed: () {
-          //TODO View Map
-        },
-        child: Icon(
-          CupertinoIcons.map_pin_ellipse,
-          size: width * 0.08,
-        ),
-      ),
     );
   }
 }

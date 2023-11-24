@@ -17,8 +17,15 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   //Controllers
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   //Login user
   void login() async {
@@ -26,8 +33,8 @@ class _LandingPageState extends State<LandingPage> {
 
     try {
       await authService.signInWithEmailAndPassword(
-        emailController.text,
-        passwordController.text,
+        _emailController.text,
+        _passwordController.text,
       );
       Navigator.pushReplacement(
         context,
@@ -83,11 +90,11 @@ class _LandingPageState extends State<LandingPage> {
                         ),
                         SizedBox(height: height * 0.05),
                         MyTextField(
-                          controller: emailController,
+                          controller: _emailController,
                           labelText: 'Email Address',
                         ),
                         SizedBox(height: height * 0.03),
-                        PasswordField(controller: passwordController),
+                        PasswordField(controller: _passwordController),
                         SizedBox(height: height * 0.04),
                         Center(
                           child: MyButton(

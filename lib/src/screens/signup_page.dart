@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:stats_and_estates/src/screens/homepage.dart';
+import 'package:stats_and_estates/src/screens/profile_page.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
 import 'package:stats_and_estates/src/widgets/back_button_builder.dart';
 import 'package:stats_and_estates/src/widgets/background_image_builder.dart';
@@ -19,45 +21,82 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   //Controllers
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final emailController = TextEditingController();
-  final numberController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _numberController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _numberController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   //Sign up user
-  void signUp() async {
-    if (passwordController.text != confirmPasswordController.text) {
+  Future<void> signUp() async {
+    final authService = Provider.of<AuthService>(context, listen: false);
+
+    if (passwordConfirmed()) {
+      try {
+        // Authenticate User
+        await authService.createUserWithEmailAndPassword(
+          _emailController.text,
+          _passwordController.text,
+        );
+
+        // Add User details to database.
+        addUserDetails(
+          _firstNameController.text.trim(),
+          _lastNameController.text.trim(),
+          _emailController.text.trim(),
+          _numberController.text.trim(),
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              e.toString(),
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  Future addUserDetails(
+      String firstName, String lastName, String email, String number) async {
+    await FirebaseFirestore.instance.collection('users').add({
+      'first name': firstName,
+      'last name': lastName,
+      'email': email,
+      'number': number,
+    });
+  }
+
+  bool passwordConfirmed() {
+    if (_passwordController.text.trim() ==
+        _confirmPasswordController.text.trim()) {
+      return true;
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Passwords do not match!'),
         ),
       );
-      return;
-    }
-
-    final authService = Provider.of<AuthService>(context, listen: false);
-
-    try {
-      await authService.createUserWithEmailAndPassword(
-        emailController.text,
-        passwordController.text,
-      );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomePage(),
-        ),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            e.toString(),
-          ),
-        ),
-      );
+      return false;
     }
   }
 
@@ -107,29 +146,29 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         SizedBox(height: height * 0.05),
                         MyTextField(
-                          controller: firstNameController,
+                          controller: _firstNameController,
                           labelText: 'First Name',
                         ),
                         SizedBox(height: height * 0.03),
                         MyTextField(
-                          controller: lastNameController,
+                          controller: _lastNameController,
                           labelText: 'Last Name',
                         ),
                         SizedBox(height: height * 0.03),
                         MyTextField(
-                          controller: emailController,
+                          controller: _emailController,
                           labelText: 'Email Address',
                         ),
                         SizedBox(height: height * 0.03),
                         MyTextField(
-                          controller: numberController,
+                          controller: _numberController,
                           labelText: 'Phone Number',
                         ),
                         SizedBox(height: height * 0.03),
-                        PasswordField(controller: passwordController),
+                        PasswordField(controller: _passwordController),
                         SizedBox(height: height * 0.03),
                         ConfirmPasswordField(
-                            controller: confirmPasswordController),
+                            controller: _confirmPasswordController),
                         SizedBox(height: height * 0.04),
                         Center(
                           child: MyButton(

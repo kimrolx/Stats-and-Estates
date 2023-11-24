@@ -17,6 +17,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   static const List<IconData> selectedIcons = [
     CupertinoIcons.house_fill,
     CupertinoIcons.bookmark_fill,
+    CupertinoIcons.map_fill,
     CupertinoIcons.mail_solid,
     CupertinoIcons.person_fill,
   ];
@@ -24,6 +25,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   static const List<IconData> unselectedIcons = [
     CupertinoIcons.house,
     CupertinoIcons.bookmark,
+    CupertinoIcons.map,
     CupertinoIcons.mail,
     CupertinoIcons.person,
   ];
@@ -91,10 +93,15 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
           break;
         // case 2:
         //   Navigator.of(context).pushReplacement(
+        //     MaterialPageRoute(builder: (context) => const MapPage()),
+        //   );
+        //   break;
+        // case 3:
+        //   Navigator.of(context).pushReplacement(
         //     MaterialPageRoute(builder: (context) => const ChatPage()),
         //   );
         //   break;
-        case 3:
+        case 4:
           Navigator.of(context).pushReplacement(
             PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) =>
@@ -129,8 +136,9 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
     return [
       _buildNavigationBarItem(currentIndex, 0, 'Home'),
       _buildNavigationBarItem(currentIndex, 1, 'Favorites'),
-      _buildNavigationBarItem(currentIndex, 2, 'Chat'),
-      _buildNavigationBarItem(currentIndex, 3, 'User'),
+      _buildNavigationBarItem(currentIndex, 2, 'Map'),
+      _buildNavigationBarItem(currentIndex, 3, 'Chat'),
+      _buildNavigationBarItem(currentIndex, 4, 'User'),
     ];
   }
 

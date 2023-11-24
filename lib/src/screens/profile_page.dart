@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
@@ -18,13 +20,52 @@ class _ProfilePageState extends State<ProfilePage> {
   final addressController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  Future<void> loadUserData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        //Retrieve User Email
+        QuerySnapshot<Map<String, dynamic>> querySnapshot =
+            await FirebaseFirestore.instance
+                .collection('users')
+                .where('email', isEqualTo: user.email)
+                .limit(1)
+                .get();
+
+        //Check if the query returned any documents
+        if (querySnapshot.docs.isNotEmpty) {
+          DocumentSnapshot<Map<String, dynamic>> userDoc =
+              querySnapshot.docs.first;
+
+          //Update the controller values with the retrieved data
+          String firstName = userDoc['first name'] ?? '';
+          String lastName = userDoc['last name'] ?? '';
+
+          nameController.text = '$firstName $lastName';
+          emailController.text = userDoc['email'] ?? '';
+          numberController.text = userDoc['number'] ?? '';
+          addressController.text = userDoc['address'] ?? '';
+        }
+      }
+    } catch (e) {
+      print('Error loading user data: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: splashColor,
       appBar: AppBar(
-        elevation: 2.0,
+        elevation: 5.0,
         backgroundColor: buttonColor,
       ),
       body: SafeArea(
@@ -80,25 +121,18 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     child: Column(
                       children: [
-                        //TODO Dynamic Data
                         MyUserInfoField(
-                            controller: TextEditingController(
-                                text: 'Sheian Neil Mary Intes'),
-                            labelText: 'Name'),
+                            controller: nameController, labelText: 'Name'),
                         Gap(height * 0.03),
                         MyUserInfoField(
-                            controller: TextEditingController(
-                                text: 'sheianneilmary.intes.22@usjr.edu.ph'),
-                            labelText: 'Email'),
+                            controller: emailController, labelText: 'Email'),
                         Gap(height * 0.03),
                         MyUserInfoField(
-                            controller:
-                                TextEditingController(text: '1234567890'),
+                            controller: numberController,
                             labelText: 'Contact Number'),
                         Gap(height * 0.03),
                         MyUserInfoField(
-                            controller: TextEditingController(
-                                text: 'Secret lang hehehe'),
+                            controller: addressController,
                             labelText: 'Address'),
                       ],
                     ),

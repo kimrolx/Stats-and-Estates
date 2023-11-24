@@ -44,6 +44,13 @@ class _HomePageState extends State<HomePage> {
                   bottomLeft: Radius.circular(width * 0.1),
                   bottomRight: Radius.circular(width * 0.1),
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.5),
+                    blurRadius: 2,
+                    offset: const Offset(0, 0.5),
+                  ),
+                ],
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: width * 0.05),
@@ -128,19 +135,6 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: const MyNavigationBar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: navigationBarColor,
-        foregroundColor: Colors.white,
-        tooltip: 'View Map',
-        onPressed: () {
-          //TODO View Map
-        },
-        child: Icon(
-          CupertinoIcons.map_pin_ellipse,
-          size: width * 0.08,
-        ),
-      ),
     );
   }
 }
