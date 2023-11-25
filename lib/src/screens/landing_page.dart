@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:stats_and_estates/src/providers/current_index_provider.dart';
 import 'package:stats_and_estates/src/screens/forgot_password_page.dart';
-import 'package:stats_and_estates/src/screens/homepage.dart';
 import 'package:stats_and_estates/src/screens/signup_page.dart';
+import 'package:stats_and_estates/src/screens/main_page.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
 import 'package:stats_and_estates/src/widgets/background_image_builder.dart';
 import 'package:stats_and_estates/src/widgets/button_builder.dart';
@@ -38,10 +39,9 @@ class _LandingPageState extends State<LandingPage> {
         _emailController.text,
         _passwordController.text,
       );
-      Navigator.pushReplacement(
-        context,
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const HomePage(),
+          builder: (context) => const MainPage(),
         ),
       );
     } catch (e) {

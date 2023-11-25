@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-import 'package:stats_and_estates/src/screens/homepage.dart';
+import 'package:stats_and_estates/src/constants/colors.dart';
+import 'package:stats_and_estates/src/screens/main_page.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
 import 'package:stats_and_estates/src/widgets/back_button_builder.dart';
 import 'package:stats_and_estates/src/widgets/background_image_builder.dart';
@@ -60,7 +62,7 @@ class _SignUpPageState extends State<SignUpPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomePage(),
+            builder: (context) => const MainPage(),
           ),
         );
       } catch (e) {

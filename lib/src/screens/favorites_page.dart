@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
-import 'package:stats_and_estates/src/data/listing_details_provider.dart';
-import 'package:stats_and_estates/src/data/listings_provider.dart';
+import 'package:stats_and_estates/src/providers/listing_details_provider.dart';
+import 'package:stats_and_estates/src/providers/listings_provider.dart';
 import 'package:stats_and_estates/src/models/listing_details.dart';
 import 'package:stats_and_estates/src/models/listings.dart';
 import 'package:stats_and_estates/src/screens/listing_details_page.dart';
 import 'package:stats_and_estates/src/widgets/favorites_container_builder.dart';
-import 'package:stats_and_estates/src/widgets/navigationbar_builder.dart';
 
 class FavoritesPage extends StatelessWidget {
-  const FavoritesPage({super.key});
+  final int tab;
+  const FavoritesPage({super.key, required this.tab});
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +54,12 @@ class FavoritesPage extends StatelessWidget {
               mainAxisSpacing: height * 0.035,
               crossAxisSpacing: width * 0.035,
               itemBuilder: (BuildContext context, int index) {
-                ListingsContent selectedListing = favoritesData[index];
-                ListingDetails selectedDetails = listingDetails[index];
-
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
+                    ListingsContent selectedListing = favoritesData[index];
+                    ListingDetails selectedDetails = listingDetails[index];
+
+                    Navigator.of(context, rootNavigator: true).push(
                       MaterialPageRoute(
                         builder: (context) => ListingDetailsPage(
                           listingsContent: selectedListing,
@@ -70,7 +69,7 @@ class FavoritesPage extends StatelessWidget {
                     );
                   },
                   child: MyFavoritesContainer(
-                    listingsContent: selectedListing,
+                    listingsContent: favoritesData[index],
                   ),
                 );
               },
@@ -79,7 +78,6 @@ class FavoritesPage extends StatelessWidget {
           )
         ],
       ),
-      bottomNavigationBar: const MyNavigationBar(),
     );
   }
 }

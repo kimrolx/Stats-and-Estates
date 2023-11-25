@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -28,7 +27,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: _emailController.text.trim());
     } on FirebaseAuthException catch (e) {
-      print(e);
       showDialog(
         context: context,
         builder: (context) {

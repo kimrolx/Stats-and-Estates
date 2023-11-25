@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({super.key});
+class MapPage extends StatefulWidget {
+  final int tab;
+  const MapPage({super.key, required this.tab});
 
   @override
-  State<MyWidget> createState() => _MyWidgetState();
+  State<MapPage> createState() => _MapPageState();
 }
 
-class _MyWidgetState extends State<MyWidget> {
+class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold();
   }
 }

@@ -5,14 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
+import 'package:stats_and_estates/src/providers/current_index_provider.dart';
 import 'package:stats_and_estates/src/screens/landing_page.dart';
 import 'package:stats_and_estates/src/screens/profile_page.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
-import 'package:stats_and_estates/src/widgets/navigationbar_builder.dart';
 import 'package:stats_and_estates/src/widgets/user_components_builder.dart';
 
 class UserPage extends StatefulWidget {
-  const UserPage({super.key});
+  final int tab;
+  const UserPage({super.key, required this.tab});
 
   @override
   State<UserPage> createState() => _UserPageState();
@@ -21,12 +22,6 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   //Controllers
   final nameController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    loadUserData();
-  }
 
   Future<void> loadUserData() async {
     try {
@@ -56,26 +51,35 @@ class _UserPageState extends State<UserPage> {
         }
       }
     } catch (e) {
-      print('Error loading user data: $e');
+      debugPrint(e.toString());
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
   }
 
   //Logout User
   void logout() {
     final authService = Provider.of<AuthService>(context, listen: false);
+    final currentIndexProvider =
+        Provider.of<CurrentIndexProvider>(context, listen: false);
+
+    currentIndexProvider.updateIndex(0);
+
     authService.signOut();
-    Navigator.pushReplacement(
-      context,
+
+    Navigator.of(context, rootNavigator: true).pushReplacement(
       MaterialPageRoute(
         builder: (context) => const LandingPage(),
       ),
     );
-    Provider.of<CurrentIndexProvider>(context, listen: false).updateIndex(0);
   }
 
   @override
   Widget build(BuildContext context) {
-    print('Name: ${nameController.text}');
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -247,7 +251,6 @@ class _UserPageState extends State<UserPage> {
           ],
         ),
       ),
-      bottomNavigationBar: const MyNavigationBar(),
     );
   }
 }
