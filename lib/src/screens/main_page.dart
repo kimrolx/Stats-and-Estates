@@ -5,7 +5,7 @@ import 'package:stats_and_estates/src/models/nav_model.dart';
 import 'package:stats_and_estates/src/providers/current_index_provider.dart';
 import 'package:stats_and_estates/src/screens/chat_page.dart';
 import 'package:stats_and_estates/src/screens/favorites_page.dart';
-import 'package:stats_and_estates/src/screens/homepage.dart';
+import 'package:stats_and_estates/src/screens/home_page.dart';
 import 'package:stats_and_estates/src/screens/map_page.dart';
 import 'package:stats_and_estates/src/screens/user_page.dart';
 import 'package:stats_and_estates/src/widgets/navigationbar_builder.dart';

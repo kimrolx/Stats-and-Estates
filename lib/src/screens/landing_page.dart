@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-import 'package:stats_and_estates/src/providers/current_index_provider.dart';
 import 'package:stats_and_estates/src/screens/forgot_password_page.dart';
 import 'package:stats_and_estates/src/screens/signup_page.dart';
 import 'package:stats_and_estates/src/screens/main_page.dart';

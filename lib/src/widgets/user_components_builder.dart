@@ -32,7 +32,7 @@ class MyUserComponent extends StatelessWidget {
           text,
           style: TextStyle(
             fontFamily: 'DMSansMedium',
-            fontSize: width * 0.045,
+            fontSize: width * 0.04,
           ),
         ),
         const Spacer(),
