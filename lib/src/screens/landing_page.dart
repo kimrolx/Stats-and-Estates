@@ -64,121 +64,133 @@ class _LandingPageState extends State<LandingPage> {
         const MyBackgroundImage(
           imagePath: 'assets/images/landing_page_background.png',
         ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: width * 0.1,
-                      vertical: height * 0.1,
-                    ),
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Login',
-                            style: TextStyle(
-                              fontFamily: 'DMSansBold',
-                              fontSize: width * 0.1,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
+        GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: width * 0.1,
+                        right: width * 0.1,
+                        top: height * 0.1,
+                        bottom: height * 0.03,
+                      ),
+                      child: Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Login',
+                              style: TextStyle(
+                                fontFamily: 'DMSansBold',
+                                fontSize: width * 0.1,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                          Gap(height * 0.04),
-                          Text(
-                            'Making Relocation informed and easier.',
-                            style: TextStyle(
-                              fontFamily: 'DMSansBold',
-                              fontSize: width * 0.06,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
+                            Gap(height * 0.04),
+                            Text(
+                              'Making Relocation informed and easier.',
+                              style: TextStyle(
+                                fontFamily: 'DMSansBold',
+                                fontSize: width * 0.06,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: height * 0.05),
-                          MyTextField(
-                            controller: _emailController,
-                            labelText: 'Email Address',
-                          ),
-                          SizedBox(height: height * 0.03),
-                          PasswordField(controller: _passwordController),
-                          Gap(height * 0.005),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    PageRouteBuilder(
-                                      pageBuilder: (context, animation,
-                                              secondaryAnimation) =>
-                                          const ForgotPasswordPage(),
-                                      transitionsBuilder: (context, animation,
-                                          secondaryAnimation, child) {
-                                        const begin = Offset(1.0, 0.0);
-                                        const end = Offset.zero;
-                                        const curve = Curves.fastOutSlowIn;
-                                        return SlideTransition(
-                                          position: Tween(
-                                                  begin: begin, end: end)
-                                              .chain(CurveTween(curve: curve))
-                                              .animate(
-                                                CurvedAnimation(
-                                                  parent: animation,
-                                                  curve:
-                                                      const Interval(0.0, 0.5),
+                            SizedBox(height: height * 0.05),
+                            MyTextField(
+                              controller: _emailController,
+                              labelText: 'Email Address',
+                            ),
+                            SizedBox(height: height * 0.03),
+                            PasswordField(controller: _passwordController),
+                            Gap(height * 0.005),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      PageRouteBuilder(
+                                        pageBuilder: (context, animation,
+                                                secondaryAnimation) =>
+                                            const ForgotPasswordPage(),
+                                        transitionsBuilder: (context, animation,
+                                            secondaryAnimation, child) {
+                                          const begin = Offset(1.0, 0.0);
+                                          const end = Offset.zero;
+                                          const curve = Curves.fastOutSlowIn;
+                                          return SlideTransition(
+                                            position: Tween(
+                                                    begin: begin, end: end)
+                                                .chain(CurveTween(curve: curve))
+                                                .animate(
+                                                  CurvedAnimation(
+                                                    parent: animation,
+                                                    curve: const Interval(
+                                                        0.0, 0.5),
+                                                  ),
                                                 ),
-                                              ),
-                                          child: child,
-                                        );
-                                      },
-                                      transitionDuration:
-                                          const Duration(milliseconds: 400),
+                                            child: child,
+                                          );
+                                        },
+                                        transitionDuration:
+                                            const Duration(milliseconds: 400),
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    'Forgot Password?',
+                                    style: TextStyle(
+                                      fontFamily: 'DMSansRegular',
+                                      fontSize: width * 0.035,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Gap(height * 0.005),
+                            Center(
+                              child: MyButton(
+                                onPressed: login,
+                                text: 'Login',
+                              ),
+                            ),
+                            SizedBox(height: height * 0.25),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: MyButton(
+                                text: 'New User? Create Account',
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const SignUpPage(),
                                     ),
                                   );
                                 },
-                                child: Text(
-                                  'Forgot Password?',
-                                  style: TextStyle(
-                                    fontFamily: 'DMSansRegular',
-                                    fontSize: width * 0.035,
-                                    color: Colors.white,
-                                  ),
-                                ),
                               ),
-                            ],
-                          ),
-                          Gap(height * 0.005),
-                          Center(
-                            child: MyButton(
-                              onPressed: login,
-                              text: 'Login',
                             ),
-                          ),
-                          SizedBox(height: height * 0.25),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: MyButton(
-                              text: 'New User? Create Account',
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const SignUpPage(),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

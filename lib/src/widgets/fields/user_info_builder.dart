@@ -23,6 +23,7 @@ class MyUserInfoField extends StatelessWidget {
           fontSize: width * 0.04,
         ),
         decoration: InputDecoration(
+          isDense: true,
           labelText: labelText,
           labelStyle: TextStyle(
             fontFamily: 'DMSansRegular',

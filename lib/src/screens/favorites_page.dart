@@ -35,7 +35,7 @@ class FavoritesPage extends StatelessWidget {
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: false,
                 title: Text(
-                  'Favorites',
+                  'My Favorites',
                   style: TextStyle(
                     fontFamily: 'BabasNeueRegular',
                     fontSize: width * 0.1,
@@ -76,7 +76,7 @@ class FavoritesPage extends StatelessWidget {
                 },
                 childCount: 4,
               ),
-            )
+            ),
           ],
         ),
       ),

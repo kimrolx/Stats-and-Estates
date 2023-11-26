@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
@@ -65,6 +66,13 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       backgroundColor: splashColor,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(CupertinoIcons.back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: backgroundColor,
+        ),
         elevation: 5.0,
         backgroundColor: buttonColor,
       ),

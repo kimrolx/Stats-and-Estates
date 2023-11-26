@@ -108,100 +108,110 @@ class _SignUpPageState extends State<SignUpPage> {
       children: [
         const MyBackgroundImage(
             imagePath: 'assets/images/signup_background.png'),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: height * 0.03,
-                    left: width * 0.06,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: const MyBackButton(),
+        GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: height * 0.03,
+                      left: width * 0.06,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const MyBackButton(),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: width * 0.1,
-                      vertical: height * 0.1,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: height * 0.03),
-                        Text(
-                          'Sign Up',
-                          style: TextStyle(
-                            fontFamily: 'DMSansBold',
-                            fontSize: width * 0.06,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                        SizedBox(height: height * 0.05),
-                        MyTextField(
-                          controller: _firstNameController,
-                          labelText: 'First Name',
-                        ),
-                        SizedBox(height: height * 0.03),
-                        MyTextField(
-                          controller: _lastNameController,
-                          labelText: 'Last Name',
-                        ),
-                        SizedBox(height: height * 0.03),
-                        MyTextField(
-                          controller: _emailController,
-                          labelText: 'Email Address',
-                        ),
-                        SizedBox(height: height * 0.03),
-                        MyTextField(
-                          controller: _numberController,
-                          labelText: 'Phone Number',
-                        ),
-                        SizedBox(height: height * 0.03),
-                        PasswordField(controller: _passwordController),
-                        SizedBox(height: height * 0.03),
-                        ConfirmPasswordField(
-                            controller: _confirmPasswordController),
-                        SizedBox(height: height * 0.04),
-                        Center(
-                          child: MyButton(
-                            onPressed: signUp,
-                            text: 'Sign up',
-                          ),
-                        ),
-                        Gap(height * 0.07),
-                        Center(
-                          child: Text(
-                            'By signing up, you agree to our',
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: width * 0.1,
+                        right: width * 0.1,
+                        top: height * 0.1,
+                        bottom: height * 0.03,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: height * 0.025),
+                          Text(
+                            'Sign Up',
                             style: TextStyle(
                               fontFamily: 'DMSansBold',
-                              fontSize: width * 0.035,
+                              fontSize: width * 0.06,
+                              fontWeight: FontWeight.w600,
                               color: Colors.white,
                             ),
                           ),
-                        ),
-                        Center(
-                          child: Text(
-                            'Terms of Use and Privacy Policy',
-                            style: TextStyle(
+                          SizedBox(height: height * 0.05),
+                          MyTextField(
+                            controller: _firstNameController,
+                            labelText: 'First Name',
+                          ),
+                          SizedBox(height: height * 0.025),
+                          MyTextField(
+                            controller: _lastNameController,
+                            labelText: 'Last Name',
+                          ),
+                          SizedBox(height: height * 0.025),
+                          MyTextField(
+                            controller: _emailController,
+                            labelText: 'Email Address',
+                          ),
+                          SizedBox(height: height * 0.025),
+                          MyTextField(
+                            controller: _numberController,
+                            labelText: 'Phone Number',
+                          ),
+                          SizedBox(height: height * 0.025),
+                          PasswordField(controller: _passwordController),
+                          SizedBox(height: height * 0.025),
+                          ConfirmPasswordField(
+                              controller: _confirmPasswordController),
+                          SizedBox(height: height * 0.035),
+                          Center(
+                            child: MyButton(
+                              onPressed: signUp,
+                              text: 'Sign up',
+                            ),
+                          ),
+                          Gap(height * 0.045),
+                          Center(
+                            child: Text(
+                              'By signing up, you agree to our',
+                              style: TextStyle(
                                 fontFamily: 'DMSansBold',
                                 fontSize: width * 0.035,
                                 color: Colors.white,
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.white,
-                                decorationThickness: width * 0.005),
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                          Center(
+                            child: Text(
+                              'Terms of Use and Privacy Policy',
+                              style: TextStyle(
+                                  fontFamily: 'DMSansBold',
+                                  fontSize: width * 0.035,
+                                  color: Colors.white,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors.white,
+                                  decorationThickness: width * 0.005),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

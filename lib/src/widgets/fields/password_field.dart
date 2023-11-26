@@ -28,6 +28,7 @@ class _PasswordFieldState extends State<PasswordField> {
         ),
         obscureText: _obscureText,
         decoration: InputDecoration(
+          isDense: true,
           labelText: 'Password',
           labelStyle: TextStyle(
             fontFamily: 'DMSansRegular',

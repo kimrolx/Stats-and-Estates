@@ -22,6 +22,7 @@ dependencies:
   
   google_nav_bar: ^5.0.6
   flutter_native_splash: ^2.3.6
+  flutter_switch: ^0.3.2
 
 dev_dependencies:
   flutter_test:

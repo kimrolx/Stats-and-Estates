@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
@@ -101,12 +102,17 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                           ),
                         ),
                         Gap(height * 0.015),
-                        Text(
-                          widget.listingsContent.address,
-                          style: TextStyle(
-                            fontFamily: 'DMSansRegular',
-                            fontSize: width * 0.04,
-                          ),
+                        Row(
+                          children: [
+                            const Icon(CupertinoIcons.location_solid),
+                            Text(
+                              widget.listingsContent.address,
+                              style: TextStyle(
+                                fontFamily: 'DMSansRegular',
+                                fontSize: width * 0.04,
+                              ),
+                            ),
+                          ],
                         ),
                         Gap(height * 0.0025),
                         Text(

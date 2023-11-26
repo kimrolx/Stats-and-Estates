@@ -43,57 +43,65 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: const Text(
-          'Forgot Password',
-          style: TextStyle(
-            fontFamily: 'DMSansRegular',
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: const Text(
+            'Forgot Password',
+            style: TextStyle(
+              fontFamily: 'DMSansRegular',
+            ),
           ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: SafeArea(
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.045),
-              child: Column(
-                children: [
-                  Gap(height * 0.1),
-                  CircleAvatar(
-                    radius: 100,
-                    backgroundColor: forgotPasswordContainer,
-                    child: SvgPicture.asset(
-                      'assets/icons/lock.svg',
-                      width: width * 0.3,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.1),
-                    child: Text(
-                      'Please enter your email to reset your password.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'DMSansMedium',
-                        fontSize: width * 0.05,
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: SafeArea(
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.045),
+                child: Column(
+                  children: [
+                    Gap(height * 0.1),
+                    CircleAvatar(
+                      radius: 100,
+                      backgroundColor: forgotPasswordContainer,
+                      child: SvgPicture.asset(
+                        'assets/icons/lock.svg',
+                        width: width * 0.3,
                       ),
                     ),
-                  ),
-                  Gap(height * 0.05),
-                  MyTextField(
-                    controller: _emailController,
-                    labelText: 'Email Address',
-                  ),
-                  Gap(height * 0.025),
-                  MyButton(
-                    onPressed: passwordReset,
-                    text: 'Reset Password',
-                  ),
-                ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+                      child: Text(
+                        'Please enter your email to reset your password.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'DMSansMedium',
+                          fontSize: width * 0.05,
+                        ),
+                      ),
+                    ),
+                    Gap(height * 0.05),
+                    MyTextField(
+                      controller: _emailController,
+                      labelText: 'Email Address',
+                    ),
+                    Gap(height * 0.025),
+                    MyButton(
+                      onPressed: passwordReset,
+                      text: 'Reset Password',
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

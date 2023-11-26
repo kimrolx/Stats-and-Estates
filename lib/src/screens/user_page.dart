@@ -89,9 +89,11 @@ class _UserPageState extends State<UserPage> {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: width * 0.05,
-              vertical: height * 0.03,
+            padding: EdgeInsets.only(
+              left: width * 0.05,
+              right: width * 0.05,
+              top: height * 0.03,
+              bottom: height * 0.045,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,7 +209,7 @@ class _UserPageState extends State<UserPage> {
                 Divider(
                   color: userSheet,
                 ),
-                Gap(height * 0.045),
+                Gap(height * 0.03),
                 Text(
                   'Settings',
                   style: TextStyle(
@@ -254,7 +256,7 @@ class _UserPageState extends State<UserPage> {
                 Divider(
                   color: userSheet,
                 ),
-                Gap(height * 0.045),
+                Gap(height * 0.03),
                 Center(
                   child: ElevatedButton(
                     onPressed: logout,

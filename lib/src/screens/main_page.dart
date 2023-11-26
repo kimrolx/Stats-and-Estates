@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
@@ -21,7 +22,6 @@ class _MainPageState extends State<MainPage> {
   //Global Keys
   final homeNavKey = GlobalKey<NavigatorState>();
   final favoritesNavKey = GlobalKey<NavigatorState>();
-  final mapNavKey = GlobalKey<NavigatorState>();
   final chatNavKey = GlobalKey<NavigatorState>();
   final userNavKey = GlobalKey<NavigatorState>();
   List<NavModel> items = [];
@@ -31,27 +31,19 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     items = [
       NavModel(
-        page: const HomePage(
-          tab: 0,
-        ),
+        page: const HomePage(tab: 0),
         navKey: homeNavKey,
       ),
       NavModel(
-        page: const FavoritesPage(
-          tab: 1,
-        ),
+        page: const FavoritesPage(tab: 1),
         navKey: favoritesNavKey,
       ),
       NavModel(
-        page: const MapPage(tab: 2),
-        navKey: mapNavKey,
-      ),
-      NavModel(
-        page: const ChatPage(tab: 3),
+        page: const ChatPage(tab: 2),
         navKey: chatNavKey,
       ),
       NavModel(
-        page: const UserPage(tab: 4),
+        page: const UserPage(tab: 3),
         navKey: userNavKey,
       )
     ];
@@ -59,6 +51,8 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return Consumer<CurrentIndexProvider>(
       builder: (context, currentIndexProvider, _) {
         return PopScope(
@@ -70,6 +64,21 @@ class _MainPageState extends State<MainPage> {
           child: Stack(
             children: [
               Scaffold(
+                floatingActionButton: FloatingActionButton(
+                  backgroundColor: navigationBarColor,
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const MapPage(),
+                      ),
+                    );
+                  },
+                  child: Icon(
+                    CupertinoIcons.map,
+                    color: Colors.white,
+                    size: width * 0.07,
+                  ),
+                ),
                 body: IndexedStack(
                   index: currentIndexProvider.currentIndex,
                   children: items

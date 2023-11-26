@@ -12,7 +12,6 @@ class MyNavigationBar extends StatelessWidget {
   static const List<IconData> selectedIcons = [
     CupertinoIcons.house_fill,
     CupertinoIcons.heart_fill,
-    CupertinoIcons.map_fill,
     CupertinoIcons.mail_solid,
     CupertinoIcons.person_fill,
   ];
@@ -20,7 +19,6 @@ class MyNavigationBar extends StatelessWidget {
   static const List<IconData> unselectedIcons = [
     CupertinoIcons.house,
     CupertinoIcons.heart,
-    CupertinoIcons.map,
     CupertinoIcons.mail,
     CupertinoIcons.person,
   ];
@@ -47,9 +45,8 @@ class MyNavigationBar extends StatelessWidget {
       return [
         buildNavigationBarItem(currentIndex, 0, 'Home'),
         buildNavigationBarItem(currentIndex, 1, 'Favorites'),
-        buildNavigationBarItem(currentIndex, 2, 'Map'),
-        buildNavigationBarItem(currentIndex, 3, 'Chat'),
-        buildNavigationBarItem(currentIndex, 4, 'User'),
+        buildNavigationBarItem(currentIndex, 2, 'Chat'),
+        buildNavigationBarItem(currentIndex, 3, 'User'),
       ];
     }
 

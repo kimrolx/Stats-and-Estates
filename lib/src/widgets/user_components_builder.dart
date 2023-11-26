@@ -21,7 +21,7 @@ class MyUserComponent extends StatelessWidget {
         CircleAvatar(
           backgroundColor: splashColor,
           foregroundColor: buttonColor,
-          radius: width * 0.06,
+          radius: width * 0.05,
           child: Icon(
             icon,
             size: width * 0.07,
