@@ -45,7 +45,7 @@ class MyNavigationBar extends StatelessWidget {
       return [
         buildNavigationBarItem(currentIndex, 0, 'Home'),
         buildNavigationBarItem(currentIndex, 1, 'Favorites'),
-        buildNavigationBarItem(currentIndex, 2, 'Chat'),
+        buildNavigationBarItem(currentIndex, 2, 'Chats'),
         buildNavigationBarItem(currentIndex, 3, 'User'),
       ];
     }

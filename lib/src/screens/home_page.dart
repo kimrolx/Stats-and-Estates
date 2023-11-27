@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: Container(
                   width: width,
-                  height: height * 0.14,
+                  height: height * 0.12,
                   decoration: BoxDecoration(
                     color: navigationBarColor,
                     boxShadow: [

@@ -17,12 +17,15 @@ class ChatPage extends StatelessWidget {
       //Display all users except current user
       if (_auth.currentUser!.email != data['email']) {
         return ListTile(
-          title: Text(data['email']),
+          title: Text(
+            data['first name'] + ' ' + data['last name'],
+          ),
           onTap: () {
             Navigator.of(context, rootNavigator: true).push(
               MaterialPageRoute(
                 builder: (context) => ConversationPage(
-                  receiverUserEmail: data['email'],
+                  receiverUserName:
+                      data['first name'] + ' ' + data['last name'],
                   receiverUserID: data['uid'],
                 ),
               ),

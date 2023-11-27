@@ -102,7 +102,7 @@ class _LandingPageState extends State<LandingPage> {
                             ),
                             Gap(height * 0.04),
                             Text(
-                              'Making Relocation informed and easier.',
+                              'Making Relocation Informed and Easier.',
                               style: TextStyle(
                                 fontFamily: 'DMSansBold',
                                 fontSize: width * 0.06,

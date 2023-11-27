@@ -242,7 +242,7 @@ class _MapPageState extends State<MapPage> {
             );
           },
           child: Icon(
-            CupertinoIcons.map_pin_ellipse,
+            CupertinoIcons.info,
             color: Colors.white,
             size: width * 0.07,
           ),

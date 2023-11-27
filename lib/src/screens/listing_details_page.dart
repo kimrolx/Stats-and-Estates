@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:full_screen_image/full_screen_image.dart';
 import 'package:gap/gap.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 import 'package:stats_and_estates/src/models/listing_details.dart';
@@ -122,7 +123,6 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                             fontSize: width * 0.04,
                           ),
                         ),
-                        Gap(height * 0.0025),
                         Text(
                           'Minimum of ${widget.listingDetails.contract}',
                           style: TextStyle(
@@ -130,28 +130,30 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                             fontSize: width * 0.04,
                           ),
                         ),
-                        Gap(height * 0.025),
-                        Center(
-                          child: MyAmenities(
-                            svgAssetPath: 'assets/icons/bed.svg',
-                            text: widget.listingDetails.amenities0,
+                        GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: images.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
                           ),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: width * 0.01,
+                                  vertical: height * 0.005),
+                              child: FullScreenWidget(
+                                disposeLevel: DisposeLevel.Medium,
+                                child: InteractiveViewer(
+                                  child: MyAmenities(
+                                    image: images[index],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                        Gap(height * 0.025),
-                        Center(
-                          child: MyAmenities(
-                            svgAssetPath: 'assets/icons/shower.svg',
-                            text: widget.listingDetails.amenities1,
-                          ),
-                        ),
-                        Gap(height * 0.025),
-                        Center(
-                          child: MyAmenities(
-                            svgAssetPath: 'assets/icons/kitchen-room.svg',
-                            text: widget.listingDetails.amenities2,
-                          ),
-                        ),
-                        Gap(height * 0.01),
                       ],
                     ),
                   ),
