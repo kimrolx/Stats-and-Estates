@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -45,17 +44,12 @@ class _SignUpPageState extends State<SignUpPage> {
     if (passwordConfirmed()) {
       try {
         // Authenticate User
-        await authService.createUserWithEmailAndPassword(
+        await authService.signUpUserWithEmailAndPassword(
           _emailController.text,
           _passwordController.text,
-        );
-
-        // Add User details to database.
-        addUserDetails(
-          _firstNameController.text.trim(),
-          _lastNameController.text.trim(),
-          _emailController.text.trim(),
-          _numberController.text.trim(),
+          _firstNameController.text,
+          _lastNameController.text,
+          _numberController.text,
         );
         Navigator.pushReplacement(
           context,
@@ -73,16 +67,6 @@ class _SignUpPageState extends State<SignUpPage> {
         );
       }
     }
-  }
-
-  Future addUserDetails(
-      String firstName, String lastName, String email, String number) async {
-    await FirebaseFirestore.instance.collection('users').add({
-      'first name': firstName,
-      'last name': lastName,
-      'email': email,
-      'number': number,
-    });
   }
 
   bool passwordConfirmed() {

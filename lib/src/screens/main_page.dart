@@ -39,7 +39,7 @@ class _MainPageState extends State<MainPage> {
         navKey: favoritesNavKey,
       ),
       NavModel(
-        page: const ChatPage(tab: 2),
+        page: ChatPage(tab: 2),
         navKey: chatNavKey,
       ),
       NavModel(

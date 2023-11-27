@@ -223,65 +223,73 @@ class _MapPageState extends State<MapPage> {
           ),
         );
 
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: navigationBarColor,
-        onPressed: () {
-          showModalBottomSheet(
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            context: context,
-            builder: (context) => buildSheet(),
-          );
-        },
-        child: Icon(
-          CupertinoIcons.map_pin_ellipse,
-          color: Colors.white,
-          size: width * 0.07,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: navigationBarColor,
+          onPressed: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              context: context,
+              builder: (context) => buildSheet(),
+            );
+          },
+          child: Icon(
+            CupertinoIcons.map_pin_ellipse,
+            color: Colors.white,
+            size: width * 0.07,
+          ),
         ),
-      ),
-      body: Stack(
-        children: [
-          InteractiveViewer(
-            constrained: false,
-            scaleEnabled: true,
-            child: Center(
-              child: Image.asset(
-                'assets/images/map.png',
-                fit: BoxFit.contain,
+        body: Stack(
+          children: [
+            InteractiveViewer(
+              constrained: false,
+              scaleEnabled: true,
+              child: Center(
+                child: Image.asset(
+                  'assets/images/map.png',
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: width * 0.02,
-              right: width * 0.07,
-              top: height * 0.045,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: Icon(
-                    CupertinoIcons.back,
-                    color: navigationBarColor,
-                    size: width * 0.1,
+            Padding(
+              padding: EdgeInsets.only(
+                left: width * 0.02,
+                right: width * 0.07,
+                top: height * 0.045,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: Icon(
+                      CupertinoIcons.back,
+                      color: navigationBarColor,
+                      size: width * 0.1,
+                    ),
                   ),
-                ),
-                Gap(width * 0.025),
-                Expanded(
-                  child: MySearchBar(
-                    controller: searchController,
-                    labelText: 'Search',
+                  Gap(width * 0.025),
+                  Expanded(
+                    child: MySearchBar(
+                      controller: searchController,
+                      labelText: 'Search',
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
