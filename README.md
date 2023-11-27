@@ -15,8 +15,8 @@ Stats & Estates is an innovative real estate mobile application designed to prov
 ## Technology Stack
 
 - **Frontend:** Flutter (Dart)
-- **Backend:** - TODO
-- **Database:** Firebase
+- **Backend:** - Backend-as-a-Service Firebase
+- **Database:** Cloud Firestore
 
 ## Contributing
 
