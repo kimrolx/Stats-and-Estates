@@ -50,21 +50,22 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: width * 0.07,
-              vertical: height * 0.045,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const MyBackButton(),
-                MyFavoritesButton(
-                  isBookMarked: isBookMarked,
-                  onTap: () {
-                    setState(() {
-                      isBookMarked = !isBookMarked;
-                    });
-                  },
-                ),
-              ],
+            child: SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const MyBackButton(),
+                  MyFavoritesButton(
+                    isBookMarked: isBookMarked,
+                    onTap: () {
+                      setState(() {
+                        isBookMarked = !isBookMarked;
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           Positioned(

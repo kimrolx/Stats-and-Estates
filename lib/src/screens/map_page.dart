@@ -9,6 +9,7 @@ import 'package:stats_and_estates/src/models/listings.dart';
 import 'package:stats_and_estates/src/providers/listing_details_provider.dart';
 import 'package:stats_and_estates/src/providers/listings_provider.dart';
 import 'package:stats_and_estates/src/screens/listing_details_page.dart';
+import 'package:stats_and_estates/src/widgets/add_rental_form_builder.dart';
 import 'package:stats_and_estates/src/widgets/map_listings_builder.dart';
 import 'package:stats_and_estates/src/widgets/search_bar_builder.dart';
 import 'package:stats_and_estates/src/widgets/statistics1_builder.dart';
@@ -27,6 +28,13 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   //Controllers
   final searchController = TextEditingController();
+  final nameController = TextEditingController();
+  final barangayController = TextEditingController();
+  final streetController = TextEditingController();
+  final cityController = TextEditingController();
+  final provinceController = TextEditingController();
+  final codeController = TextEditingController();
+  final priceController = TextEditingController();
 
   List<ListingsContent> favoritesData = ListingsProvider.getListingsContent();
   List<ListingDetails> listingDetails =
@@ -231,21 +239,52 @@ class _MapPageState extends State<MapPage> {
         }
       },
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: navigationBarColor,
-          onPressed: () {
-            showModalBottomSheet(
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              context: context,
-              builder: (context) => buildSheet(),
-            );
-          },
-          child: Icon(
-            CupertinoIcons.info,
-            color: Colors.white,
-            size: width * 0.07,
-          ),
+        floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              heroTag: 'info_button',
+              backgroundColor: navigationBarColor,
+              onPressed: () {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  context: context,
+                  builder: (context) => buildSheet(),
+                );
+              },
+              child: Icon(
+                CupertinoIcons.info,
+                color: Colors.white,
+                size: width * 0.07,
+              ),
+            ),
+            Gap(height * 0.02),
+            FloatingActionButton(
+              heroTag: 'add_button',
+              backgroundColor: navigationBarColor,
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => MyRentalForm(
+                      nameController: nameController,
+                      barangayController: barangayController,
+                      streetController: streetController,
+                      cityController: cityController,
+                      provinceController: provinceController,
+                      codeController: codeController,
+                      priceController: priceController,
+                    ),
+                  ),
+                );
+              },
+              child: Icon(
+                CupertinoIcons.add,
+                color: Colors.white,
+                size: width * 0.07,
+              ),
+            ),
+          ],
         ),
         body: Stack(
           children: [
@@ -263,29 +302,31 @@ class _MapPageState extends State<MapPage> {
               padding: EdgeInsets.only(
                 left: width * 0.02,
                 right: width * 0.07,
-                top: height * 0.045,
+                top: height * 0.01,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: Icon(
-                      CupertinoIcons.back,
-                      color: navigationBarColor,
-                      size: width * 0.1,
+              child: SafeArea(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: Icon(
+                        CupertinoIcons.back,
+                        color: navigationBarColor,
+                        size: width * 0.1,
+                      ),
                     ),
-                  ),
-                  Gap(width * 0.025),
-                  Expanded(
-                    child: MySearchBar(
-                      controller: searchController,
-                      labelText: 'Search',
+                    Gap(width * 0.025),
+                    Expanded(
+                      child: MySearchBar(
+                        controller: searchController,
+                        labelText: 'Search',
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

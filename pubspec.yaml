@@ -24,6 +24,7 @@ dependencies:
   flutter_native_splash: ^2.3.6
   flutter_switch: ^0.3.2
   full_screen_image: ^2.0.0
+  image_picker: ^1.0.4
 
 dev_dependencies:
   flutter_test:

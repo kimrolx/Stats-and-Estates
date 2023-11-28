@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 import 'package:stats_and_estates/src/providers/current_index_provider.dart';
 import 'package:stats_and_estates/src/screens/landing_page.dart';
+import 'package:stats_and_estates/src/screens/payment_methods_page.dart';
 import 'package:stats_and_estates/src/screens/profile_page.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
 import 'package:stats_and_estates/src/widgets/user_components_builder.dart';
@@ -198,8 +199,14 @@ class _UserPageState extends State<UserPage> {
                 ),
                 Gap(height * 0.01),
                 InkWell(
-                  // TODO Landlord Route
-                  onTap: () {},
+                  // TODO Payment Methods Route
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: true).push(
+                      MaterialPageRoute(
+                        builder: (context) => const PaymentMethodsPage(),
+                      ),
+                    );
+                  },
                   child: const MyUserComponent(
                     text: 'Payment Methods',
                     icon: CupertinoIcons.creditcard_fill,

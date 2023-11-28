@@ -92,6 +92,7 @@ class _ConversationPageState extends State<ConversationPage> {
 
           return ListView(
             physics: const BouncingScrollPhysics(),
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             children: snapshot.data!.docs
                 .map((document) => buildMessageItem(document))
                 .toList(),
@@ -123,78 +124,86 @@ class _ConversationPageState extends State<ConversationPage> {
       );
     }
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            width: width,
-            height: height,
-            color: backgroundColor,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: width * 0.035,
-              vertical: height * 0.045,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              width: width,
+              height: height,
+              color: backgroundColor,
             ),
-            child: const MyBackButton(),
-          ),
-          Positioned(
-            top: height * 0.15,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: SizedBox(
-              height: height * 0.5,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(60),
-                    topRight: Radius.circular(60),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: width * 0.035,
+                vertical: height * 0.055,
+              ),
+              child: const MyBackButton(),
+            ),
+            Positioned(
+              top: height * 0.15,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: SizedBox(
+                height: height * 0.5,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(60),
+                      topRight: Radius.circular(60),
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: width * 0.01,
-                    right: width * 0.01,
-                    top: height * 0.125,
-                  ),
-                  child: Column(
-                    children: [
-                      //Messages
-                      Expanded(
-                        child: buildMessageList(),
-                      ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: width * 0.01,
+                      right: width * 0.01,
+                      top: height * 0.125,
+                    ),
+                    child: Column(
+                      children: [
+                        //Messages
+                        Expanded(
+                          child: buildMessageList(),
+                        ),
 
-                      //User Input
-                      buildMessageInput(),
-                    ],
+                        //User Input
+                        buildMessageInput(),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: height * 0.075),
-            alignment: Alignment.center,
-            child: Column(
-              children: [
-                const CircleAvatar(
-                  radius: 60,
-                ),
-                Gap(height * 0.01),
-                Text(
-                  widget.receiverUserName,
-                  style: TextStyle(
-                    fontFamily: 'DMSansBold',
-                    fontSize: width * 0.05,
-                    color: Colors.black,
+            Container(
+              padding: EdgeInsets.only(top: height * 0.075),
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  const CircleAvatar(
+                    radius: 60,
                   ),
-                )
-              ],
+                  Gap(height * 0.01),
+                  Text(
+                    widget.receiverUserName,
+                    style: TextStyle(
+                      fontFamily: 'DMSansBold',
+                      fontSize: width * 0.05,
+                      color: Colors.black,
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
