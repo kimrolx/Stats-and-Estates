@@ -100,6 +100,22 @@ Widget statistics4Builder(double width, double height) {
                   ),
                 ],
               ),
+              Text(
+                'Sources',
+                style: TextStyle(
+                  fontFamily: 'DMSansBold',
+                  fontSize: width * 0.025,
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                'https://www.legitsources.com',
+                style: TextStyle(
+                  fontFamily: 'DMSansBold',
+                  fontSize: width * 0.015,
+                  color: Colors.white,
+                ),
+              ),
             ],
           ),
         ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-import 'package:stats_and_estates/src/screens/main_page.dart';
+import 'package:stats_and_estates/src/screens/verification_page.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
 import 'package:stats_and_estates/src/widgets/back_button_builder.dart';
 import 'package:stats_and_estates/src/widgets/background_image_builder.dart';
@@ -37,35 +37,53 @@ class _SignUpPageState extends State<SignUpPage> {
     super.dispose();
   }
 
-  //Sign up user
+  // Sign up user
   Future<void> signUp() async {
     final authService = Provider.of<AuthService>(context, listen: false);
 
-    if (passwordConfirmed()) {
-      try {
-        // Authenticate User
-        await authService.signUpUserWithEmailAndPassword(
-          _emailController.text,
-          _passwordController.text,
-          _firstNameController.text,
-          _lastNameController.text,
-          _numberController.text,
-        );
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MainPage(),
+    // Check if any fields are empty
+    if (_firstNameController.text.isEmpty ||
+        _lastNameController.text.isEmpty ||
+        _emailController.text.isEmpty ||
+        _numberController.text.isEmpty ||
+        _passwordController.text.isEmpty ||
+        _confirmPasswordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fill in all fields.'),
+        ),
+      );
+      return;
+    }
+
+    // Check if passwords match
+    if (!passwordConfirmed()) {
+      return;
+    }
+
+    try {
+      // Authenticate User
+      await authService.signUpUserWithEmailAndPassword(
+        _emailController.text,
+        _passwordController.text,
+        _firstNameController.text,
+        _lastNameController.text,
+        _numberController.text,
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const VerificationPage(),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
           ),
-        );
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              e.toString(),
-            ),
-          ),
-        );
-      }
+        ),
+      );
     }
   }
 

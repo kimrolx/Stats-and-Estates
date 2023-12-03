@@ -5,9 +5,11 @@ import 'package:stats_and_estates/src/providers/current_index_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_gate.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
+import 'package:stats_and_estates/src/services/notifications/notification_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.initializeNotification();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     MultiProvider(

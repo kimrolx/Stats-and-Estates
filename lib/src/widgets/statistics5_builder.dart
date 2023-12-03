@@ -73,7 +73,7 @@ Widget statistics5Builder(
       );
 
   return Container(
-    height: height * 0.34,
+    height: height * 0.365,
     width: width * 0.9,
     decoration: BoxDecoration(
       color: favoritesContainer,
@@ -150,7 +150,23 @@ Widget statistics5Builder(
                   fontSize: width * 0.12,
                   color: Colors.white,
                 ),
-              )
+              ),
+              Text(
+                'Sources',
+                style: TextStyle(
+                  fontFamily: 'DMSansBold',
+                  fontSize: width * 0.025,
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                'https://www.legitsources.com',
+                style: TextStyle(
+                  fontFamily: 'DMSansBold',
+                  fontSize: width * 0.015,
+                  color: Colors.white,
+                ),
+              ),
             ],
           ),
           Gap(width * 0.01),

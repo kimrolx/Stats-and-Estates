@@ -8,7 +8,7 @@ Widget statistics3Builder(
   double height,
 ) {
   return Container(
-    height: height * 0.3,
+    height: height * 0.31,
     width: width * 0.9,
     decoration: BoxDecoration(
       color: favoritesContainer,
@@ -29,6 +29,7 @@ Widget statistics3Builder(
       child: Row(
         children: [
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -81,7 +82,23 @@ Widget statistics3Builder(
                   fontSize: width * 0.12,
                   color: Colors.white,
                 ),
-              )
+              ),
+              Text(
+                'Sources',
+                style: TextStyle(
+                  fontFamily: 'DMSansBold',
+                  fontSize: width * 0.025,
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                'https://www.legitsources.com',
+                style: TextStyle(
+                  fontFamily: 'DMSansBold',
+                  fontSize: width * 0.015,
+                  color: Colors.white,
+                ),
+              ),
             ],
           ),
           Gap(width * 0.035),

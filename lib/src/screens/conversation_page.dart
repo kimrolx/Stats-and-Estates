@@ -1,10 +1,14 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 import 'package:stats_and_estates/src/services/chat/chat_service.dart';
-import 'package:stats_and_estates/src/widgets/back_button_builder.dart';
+import 'package:stats_and_estates/src/utils/image_picker_util.dart';
 import 'package:stats_and_estates/src/widgets/chat_bubble_builder.dart';
 import 'package:stats_and_estates/src/widgets/fields/text_chat_field.dart';
 
@@ -35,6 +39,17 @@ class _ConversationPageState extends State<ConversationPage> {
     }
   }
 
+  final List<Uint8List?> _images = List.generate(3, (index) => null);
+
+  void selectImage(int index) async {
+    Uint8List? img = await pickImage(ImageSource.gallery);
+    if (img != null) {
+      setState(() {
+        _images[index] = img;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -49,6 +64,14 @@ class _ConversationPageState extends State<ConversationPage> {
           ? Alignment.centerRight
           : Alignment.centerLeft;
 
+      var crossAlignment = (data['senderID'] == _firebaseAuth.currentUser!.uid)
+          ? CrossAxisAlignment.end
+          : CrossAxisAlignment.start;
+
+      var mainAlignment = (data['senderID'] == _firebaseAuth.currentUser!.uid)
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.start;
+
       return Container(
         alignment: alignment,
         child: Padding(
@@ -57,14 +80,8 @@ class _ConversationPageState extends State<ConversationPage> {
             vertical: height * 0.005,
           ),
           child: Column(
-            crossAxisAlignment:
-                (data['senderID'] == _firebaseAuth.currentUser!.uid)
-                    ? CrossAxisAlignment.end
-                    : CrossAxisAlignment.start,
-            mainAxisAlignment:
-                (data['senderID'] == _firebaseAuth.currentUser!.uid)
-                    ? MainAxisAlignment.end
-                    : MainAxisAlignment.start,
+            crossAxisAlignment: crossAlignment,
+            mainAxisAlignment: mainAlignment,
             children: [
               MyChatBubble(
                 message: data['message'],
@@ -92,7 +109,6 @@ class _ConversationPageState extends State<ConversationPage> {
 
           return ListView(
             physics: const BouncingScrollPhysics(),
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             children: snapshot.data!.docs
                 .map((document) => buildMessageItem(document))
                 .toList(),
@@ -110,7 +126,20 @@ class _ConversationPageState extends State<ConversationPage> {
         ),
         child: Row(
           children: [
-            //Textfield
+            GestureDetector(
+              onTap: () {
+                int nullIndex = _images.indexWhere((img) => img == null);
+                if (nullIndex != -1) {
+                  selectImage(nullIndex);
+                }
+              },
+              child: Icon(
+                CupertinoIcons.plus_circle_fill,
+                size: width * 0.085,
+                color: navigationBarColor,
+              ),
+            ),
+            Gap(width * 0.02),
             Expanded(
               child: MyTextChatField(
                 controller: _messageController,
@@ -132,76 +161,51 @@ class _ConversationPageState extends State<ConversationPage> {
         }
       },
       child: Scaffold(
-        body: Stack(
-          children: [
-            Container(
-              width: width,
-              height: height,
-              color: backgroundColor,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: backgroundColor,
+          actions: <Widget>[
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(CupertinoIcons.phone_fill),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: width * 0.035,
-                vertical: height * 0.055,
+          ],
+          leading: IconButton(
+            icon: const Icon(CupertinoIcons.back),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          title: Row(
+            children: [
+              const CircleAvatar(
+                radius: 20,
               ),
-              child: const MyBackButton(),
-            ),
-            Positioned(
-              top: height * 0.15,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: SizedBox(
-                height: height * 0.5,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(60),
-                      topRight: Radius.circular(60),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: width * 0.01,
-                      right: width * 0.01,
-                      top: height * 0.125,
-                    ),
-                    child: Column(
-                      children: [
-                        //Messages
-                        Expanded(
-                          child: buildMessageList(),
-                        ),
-
-                        //User Input
-                        buildMessageInput(),
-                      ],
-                    ),
+              Gap(height * 0.01),
+              InkWell(
+                //TODO
+                onTap: () {},
+                child: Text(
+                  widget.receiverUserName,
+                  style: TextStyle(
+                    fontFamily: 'DMSansBold',
+                    fontSize: width * 0.045,
+                    color: Colors.black,
                   ),
                 ),
-              ),
+              )
+            ],
+          ),
+        ),
+        body: Column(
+          children: [
+            //Messages
+            Expanded(
+              child: buildMessageList(),
             ),
-            Container(
-              padding: EdgeInsets.only(top: height * 0.075),
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  const CircleAvatar(
-                    radius: 60,
-                  ),
-                  Gap(height * 0.01),
-                  Text(
-                    widget.receiverUserName,
-                    style: TextStyle(
-                      fontFamily: 'DMSansBold',
-                      fontSize: width * 0.05,
-                      color: Colors.black,
-                    ),
-                  )
-                ],
-              ),
-            ),
+
+            //User Input
+            buildMessageInput(),
           ],
         ),
       ),

@@ -80,6 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Stack(
                 children: [
@@ -145,6 +146,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                   ),
+                ),
+              ),
+              Gap(height * 0.035),
+              Text(
+                'Delete Account',
+                style: TextStyle(
+                  fontFamily: 'DMSansMedium',
+                  fontSize: width * 0.045,
+                  color: Colors.red,
                 ),
               ),
             ],
