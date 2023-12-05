@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
+import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
 import 'package:stats_and_estates/src/widgets/fields/user_info_builder.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -14,6 +16,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  bool isEditable = true;
+
   //Controllers
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -23,7 +27,11 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    loadUserData();
+    loadUserData().then((_) {
+      setState(() {
+        isEditable = true;
+      });
+    });
   }
 
   Future<void> loadUserData() async {
@@ -66,6 +74,69 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       backgroundColor: splashColor,
       appBar: AppBar(
+        actions: <Widget>[
+          TextButton(
+            onPressed: () async {
+              // Toggle the editable state
+              setState(() {
+                isEditable = !isEditable;
+              });
+              if (isEditable) {
+                // If in edit mode, save the changes
+                String userId = FirebaseAuth.instance.currentUser!.uid;
+                String newEmail = emailController.text;
+                String newNumber = numberController.text;
+                String newAddress = addressController.text;
+
+                final authService =
+                    Provider.of<AuthService>(context, listen: false);
+
+                // Always consider email for updates
+                bool emailEdited = newEmail !=
+                    FirebaseAuth.instance.currentUser!.email?.trim();
+
+                // Check if any other edits have been made
+                bool otherEdits = emailEdited ||
+                    newNumber != numberController.text ||
+                    newAddress != addressController.text;
+
+                // Update the user profile with the new address
+                if (otherEdits) {
+                  await authService.updateProfile(
+                    userId,
+                    newEmail: newEmail,
+                    newNumber: newNumber,
+                    newAddress: newAddress,
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Profile updated successfully!'),
+                    ),
+                  );
+                }
+
+                // Notify the user that the changes are saved
+              }
+            },
+            child: isEditable
+                ? Text(
+                    'Edit',
+                    style: TextStyle(
+                      fontFamily: 'DMSansRegular',
+                      fontSize: width * 0.04,
+                      color: Colors.white,
+                    ),
+                  )
+                : Text(
+                    'Save',
+                    style: TextStyle(
+                      fontFamily: 'DMSansRegular',
+                      fontSize: width * 0.04,
+                      color: Colors.white,
+                    ),
+                  ),
+          ),
+        ],
         leading: IconButton(
           icon: const Icon(CupertinoIcons.back),
           onPressed: () {
@@ -131,16 +202,22 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Column(
                       children: [
                         MyUserInfoField(
-                            controller: nameController, labelText: 'Name'),
+                            isReadOnly: true,
+                            controller: nameController,
+                            labelText: 'Name'),
                         Gap(height * 0.03),
                         MyUserInfoField(
-                            controller: emailController, labelText: 'Email'),
+                            isReadOnly: isEditable,
+                            controller: emailController,
+                            labelText: 'Email'),
                         Gap(height * 0.03),
                         MyUserInfoField(
+                            isReadOnly: isEditable,
                             controller: numberController,
                             labelText: 'Contact Number'),
                         Gap(height * 0.03),
                         MyUserInfoField(
+                            isReadOnly: isEditable,
                             controller: addressController,
                             labelText: 'Address'),
                       ],

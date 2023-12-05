@@ -6,11 +6,13 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 import 'package:stats_and_estates/src/providers/current_index_provider.dart';
+import 'package:stats_and_estates/src/screens/higher_verification_page.dart';
 import 'package:stats_and_estates/src/screens/landing_page.dart';
 import 'package:stats_and_estates/src/screens/notifications_page.dart';
 import 'package:stats_and_estates/src/screens/payment_methods_page.dart';
 import 'package:stats_and_estates/src/screens/profile_page.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
+import 'package:stats_and_estates/src/widgets/stepper_verification_builder.dart';
 import 'package:stats_and_estates/src/widgets/user_components_builder.dart';
 
 class UserPage extends StatefulWidget {
@@ -91,17 +93,15 @@ class _UserPageState extends State<UserPage> {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.only(
-              left: width * 0.05,
-              right: width * 0.05,
-              top: height * 0.03,
-              bottom: height * 0.045,
+            padding: EdgeInsets.symmetric(
+              horizontal: width * 0.05,
+              vertical: height * 0.03,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(bottom: height * 0.035),
+                  padding: EdgeInsets.only(bottom: height * 0.025),
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(
@@ -178,6 +178,35 @@ class _UserPageState extends State<UserPage> {
                     ),
                   ),
                 ),
+                const Center(
+                  child: VerificationStepperWidget(),
+                ),
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: splashColor,
+                      foregroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).push(
+                        MaterialPageRoute(
+                          builder: (context) => const HigherVerificationPage(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Verify Now!',
+                      style: TextStyle(
+                        fontFamily: 'DMSansMedium',
+                        fontSize: width * 0.035,
+                      ),
+                    ),
+                  ),
+                ),
+                Gap(height * 0.015),
                 Text(
                   'Profile',
                   style: TextStyle(

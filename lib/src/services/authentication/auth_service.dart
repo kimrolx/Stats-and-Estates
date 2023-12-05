@@ -47,6 +47,7 @@ class AuthService extends ChangeNotifier {
         'first name': firstName,
         'last name': lastName,
         'number': number,
+        'address': null,
       });
 
       return userCredential;
@@ -54,6 +55,44 @@ class AuthService extends ChangeNotifier {
     //Catch errors
     on FirebaseAuthException catch (e) {
       throw Exception(e.code);
+    }
+  }
+
+  //Update Profile
+  Future<void> updateProfile(
+    String userID, {
+    String? newEmail,
+    String? newNumber,
+    String? newAddress,
+  }) async {
+    try {
+      // Reference to the user's document in Firestore
+      DocumentReference<Map<String, dynamic>> userDocRef =
+          FirebaseFirestore.instance.collection('users').doc(userID);
+
+      // Create a map with fields to update
+      Map<String, dynamic> updates = {};
+
+      // Add new email to updates if provided
+      if (newEmail != null) {
+        updates['email'] = newEmail;
+      }
+
+      // Add new number to updates if provided
+      if (newNumber != null) {
+        updates['number'] = newNumber;
+      }
+
+      // Add new address to updates if provided
+      if (newAddress != null) {
+        updates['address'] = newAddress;
+      }
+
+      // Update the document in Firestore
+      await userDocRef.update(updates);
+    } catch (e) {
+      debugPrint(e.toString());
+      // Handle the error as needed
     }
   }
 

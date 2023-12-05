@@ -81,8 +81,8 @@ class MyFavoritesContainer extends StatelessWidget {
                       GestureDetector(
                         onTap: () {},
                         child: Container(
-                          width: width * 0.285,
-                          height: height * 0.043,
+                          width: width * 0.25,
+                          height: height * 0.045,
                           decoration: BoxDecoration(
                             color: buttonColor,
                             borderRadius: BorderRadius.circular(10),

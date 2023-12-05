@@ -27,6 +27,7 @@ dependencies:
   image_picker: ^1.0.4
   awesome_notifications: ^0.8.2
   intl: ^0.18.1
+  easy_stepper: ^0.8.3
 
 dev_dependencies:
   flutter_test:

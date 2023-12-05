@@ -4,18 +4,19 @@ import 'package:stats_and_estates/src/constants/colors.dart';
 class MyUserInfoField extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
-  const MyUserInfoField({
-    super.key,
-    required this.controller,
-    required this.labelText,
-  });
+  final bool isReadOnly;
+  const MyUserInfoField(
+      {super.key,
+      required this.controller,
+      required this.labelText,
+      required this.isReadOnly});
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Form(
       child: TextFormField(
-        readOnly: true,
+        readOnly: isReadOnly,
         controller: controller,
         style: TextStyle(
           fontFamily: 'DMSansRegular',
@@ -41,7 +42,7 @@ class MyUserInfoField extends StatelessWidget {
             borderSide: BorderSide(color: buttonColor),
           ),
         ),
-        cursorColor: splashColor,
+        cursorColor: Colors.black,
       ),
     );
   }
