@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 import 'package:stats_and_estates/src/screens/conversation_page.dart';
 import 'package:stats_and_estates/src/services/chat/chat_service.dart';
@@ -36,7 +37,7 @@ class ChatPage extends StatelessWidget {
 
             var lastMessage = snapshot.data;
             var lastMessageText = lastMessage != null
-                ? lastMessage['message'] ?? 'No messages yet'
+                ? lastMessage['message']
                 : 'No messages yet';
 
             // Check if the last message was sent by the current user
@@ -47,10 +48,32 @@ class ChatPage extends StatelessWidget {
             bool currentUserReceivedLastMessage = lastMessage != null &&
                 lastMessage['receiverID'] == _auth.currentUser!.uid;
 
+            var time = snapshot.data;
+            var lastMessageTime = time?['timestamp'];
+
+            String formattedTime = '';
+
+            if (lastMessageTime != null) {
+              DateTime now = DateTime.now();
+              DateTime messageDateTime = lastMessageTime.toDate();
+              Duration difference = now.difference(messageDateTime);
+              if (difference.inHours < 24) {
+                // If the message is within 24 hours, show the time
+                formattedTime = DateFormat.Hm().format(messageDateTime);
+              } else {
+                // If the message is beyond 24 hours, show the day
+                formattedTime = DateFormat.E().format(messageDateTime);
+              }
+            }
+
             // Modify the subtitle based on the sender
-            var subtitleText = currentUserSentLastMessage
+            var indicatorText = currentUserSentLastMessage
                 ? 'You: $lastMessageText'
                 : lastMessageText;
+
+            String subtitleText = lastMessage != null
+                ? indicatorText + ' ∙ ' + formattedTime
+                : indicatorText;
 
             // Trigger notification when a new message arrives and the user is logged in
             if (snapshot.hasData &&
@@ -70,8 +93,15 @@ class ChatPage extends StatelessWidget {
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: width * 0.025,
                 ),
+                leading: const CircleAvatar(
+                  radius: 20,
+                ),
                 title: Text(
-                  data['first name'] + ' ' + data['last name'],
+                  data['first name'] +
+                      ' ' +
+                      data['last name'] +
+                      ' ∙ ' +
+                      'Online',
                   style: TextStyle(
                     fontFamily: 'DMSansMedium',
                     fontSize: width * 0.045,
@@ -162,13 +192,13 @@ class ChatPage extends StatelessWidget {
                       color: Colors.white,
                       fontSize: width * 0.045,
                     ),
-                    prefixIcon: IconButton(
-                      icon: Icon(
+                    prefixIcon: GestureDetector(
+                      child: Icon(
                         CupertinoIcons.search,
                         size: width * 0.06,
                         color: Colors.white,
                       ),
-                      onPressed: () {},
+                      onTap: () {},
                     ),
                   ),
                   cursorColor: buttonColor,

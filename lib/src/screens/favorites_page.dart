@@ -8,18 +8,31 @@ import 'package:stats_and_estates/src/models/listings.dart';
 import 'package:stats_and_estates/src/screens/listing_details_page.dart';
 import 'package:stats_and_estates/src/widgets/favorites_container_builder.dart';
 
-class FavoritesPage extends StatelessWidget {
+class FavoritesPage extends StatefulWidget {
   final int tab;
   const FavoritesPage({super.key, required this.tab});
+
+  @override
+  State<FavoritesPage> createState() => _FavoritesPageState();
+}
+
+class _FavoritesPageState extends State<FavoritesPage> {
+  bool isDeleteButtonVisible = false;
+
+  List<ListingsContent> favoritesData = ListingsProvider.getListingsContent();
+  List<ListingDetails> listingDetails =
+      ListingDetailsProvider.getListingsDetails();
+
+  void onDeletePressed(int index) {
+    setState(() {
+      favoritesData.removeAt(index);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
-    List<ListingsContent> favoritesData = ListingsProvider.getListingsContent();
-    List<ListingDetails> listingDetails =
-        ListingDetailsProvider.getListingsDetails();
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -28,6 +41,21 @@ class FavoritesPage extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           slivers: [
             SliverAppBar(
+              actions: <Widget>[
+                //Show Delete Button
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isDeleteButtonVisible = !isDeleteButtonVisible;
+                    });
+                  },
+                  icon: Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                    size: width * 0.065,
+                  ),
+                ),
+              ],
               backgroundColor: Colors.transparent,
               expandedHeight: height * 0.125,
               floating: true,
@@ -71,10 +99,14 @@ class FavoritesPage extends StatelessWidget {
                     },
                     child: MyFavoritesContainer(
                       listingsContent: favoritesData[index],
+                      isDeleteButtonVisible: isDeleteButtonVisible,
+                      onDeletePressed: () {
+                        onDeletePressed(index);
+                      },
                     ),
                   );
                 },
-                childCount: 4,
+                childCount: favoritesData.length,
               ),
             ),
           ],

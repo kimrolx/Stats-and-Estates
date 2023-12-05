@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:gap/gap.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 
 class NotificationsPage extends StatefulWidget {
@@ -11,7 +12,9 @@ class NotificationsPage extends StatefulWidget {
 }
 
 class _NotificationsPageState extends State<NotificationsPage> {
-  bool isSwitched = false;
+  bool isPushNotifSwitched = false;
+  bool isScheduleNotifSwitched = false;
+  bool isDNDSwitched = false;
 
   @override
   Widget build(BuildContext context) {
@@ -73,10 +76,111 @@ class _NotificationsPageState extends State<NotificationsPage> {
                             height: height * 0.03,
                             activeColor: navigationBarColor,
                             inactiveColor: backgroundColor,
-                            value: isSwitched,
+                            value: isPushNotifSwitched,
                             onToggle: (val) {
                               setState(() {
-                                isSwitched = val;
+                                isPushNotifSwitched = val;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      Gap(height * 0.015),
+                      Row(
+                        children: [
+                          Text(
+                            'Set a Schedule for Push Notifications',
+                            style: TextStyle(
+                              fontFamily: 'DMSansMedium',
+                              fontSize: width * 0.04,
+                            ),
+                          ),
+                          const Spacer(),
+                          FlutterSwitch(
+                            width: width * 0.12,
+                            height: height * 0.03,
+                            activeColor: navigationBarColor,
+                            inactiveColor: backgroundColor,
+                            value: isScheduleNotifSwitched,
+                            onToggle: (val) {
+                              setState(() {
+                                isScheduleNotifSwitched = val;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      Gap(height * 0.015),
+                      Visibility(
+                        visible: isScheduleNotifSwitched,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Start',
+                              style: TextStyle(
+                                fontFamily: 'DMSansMedium',
+                                fontSize: width * 0.04,
+                              ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              '12:00 AM',
+                              style: TextStyle(
+                                fontFamily: 'DMSansMedium',
+                                fontSize: width * 0.04,
+                              ),
+                            ),
+                            const Icon(
+                              CupertinoIcons.forward,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Gap(height * 0.005),
+                      Visibility(
+                        visible: isScheduleNotifSwitched,
+                        child: Row(
+                          children: [
+                            Text(
+                              'End',
+                              style: TextStyle(
+                                fontFamily: 'DMSansMedium',
+                                fontSize: width * 0.04,
+                              ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              '8:00 AM',
+                              style: TextStyle(
+                                fontFamily: 'DMSansMedium',
+                                fontSize: width * 0.04,
+                              ),
+                            ),
+                            const Icon(
+                              CupertinoIcons.forward,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Do not Disturb',
+                            style: TextStyle(
+                              fontFamily: 'DMSansMedium',
+                              fontSize: width * 0.04,
+                            ),
+                          ),
+                          const Spacer(),
+                          FlutterSwitch(
+                            width: width * 0.12,
+                            height: height * 0.03,
+                            activeColor: navigationBarColor,
+                            inactiveColor: backgroundColor,
+                            value: isDNDSwitched,
+                            onToggle: (val) {
+                              setState(() {
+                                isDNDSwitched = val;
                               });
                             },
                           ),

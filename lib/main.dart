@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:stats_and_estates/firebase_options.dart';
 import 'package:stats_and_estates/src/providers/current_index_provider.dart';
@@ -8,7 +9,8 @@ import 'package:stats_and_estates/src/services/authentication/auth_service.dart'
 import 'package:stats_and_estates/src/services/notifications/notification_service.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await NotificationService.initializeNotification();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
@@ -20,6 +22,7 @@ Future<void> main() async {
       child: const MyApp(),
     ),
   );
+  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {

@@ -23,7 +23,13 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   //Controllers
-  final nameController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
 
   Future<void> loadUserData() async {
     try {
@@ -55,12 +61,6 @@ class _UserPageState extends State<UserPage> {
     } catch (e) {
       debugPrint(e.toString());
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    loadUserData();
   }
 
   //Logout User

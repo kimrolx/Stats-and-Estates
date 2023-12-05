@@ -139,8 +139,8 @@ class _MyBottomSheetContentsState extends State<MyBottomSheetContents> {
                                       statistics1Builder(
                                         width,
                                         height,
-                                        Icons.monitor_heart_outlined,
-                                        'Mortality Rate',
+                                        Icons.school,
+                                        'School Ratings',
                                         '51%',
                                       ),
                                     ],
