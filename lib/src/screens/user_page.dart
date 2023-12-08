@@ -6,11 +6,14 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 import 'package:stats_and_estates/src/providers/current_index_provider.dart';
+import 'package:stats_and_estates/src/screens/become_landlord_page.dart';
+import 'package:stats_and_estates/src/screens/feedback_page.dart';
 import 'package:stats_and_estates/src/screens/higher_verification_page.dart';
 import 'package:stats_and_estates/src/screens/landing_page.dart';
 import 'package:stats_and_estates/src/screens/notifications_page.dart';
 import 'package:stats_and_estates/src/screens/payment_methods_page.dart';
 import 'package:stats_and_estates/src/screens/profile_page.dart';
+import 'package:stats_and_estates/src/screens/support_page.dart';
 import 'package:stats_and_estates/src/services/authentication/auth_service.dart';
 import 'package:stats_and_estates/src/widgets/stepper_verification_builder.dart';
 import 'package:stats_and_estates/src/widgets/user_components_builder.dart';
@@ -24,44 +27,35 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  //Controllers
   TextEditingController nameController = TextEditingController();
+
+  String? currentUser = FirebaseAuth.instance.currentUser?.uid ?? "";
 
   @override
   void initState() {
     super.initState();
-    loadUserData();
+    fetchAndSetUserName();
   }
 
-  Future<void> loadUserData() async {
+  // Fetch user's name from Firestore and set it to the nameController
+  Future<void> fetchAndSetUserName() async {
     try {
-      User? user = FirebaseAuth.instance.currentUser;
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser)
+          .get();
 
-      if (user != null) {
-        //Retrieve User Email
-        QuerySnapshot<Map<String, dynamic>> querySnapshot =
-            await FirebaseFirestore.instance
-                .collection('users')
-                .where('email', isEqualTo: user.email)
-                .limit(1)
-                .get();
+      if (userSnapshot.exists) {
+        String firstName = userSnapshot['first name'] ?? '';
+        String lastName = userSnapshot['last name'] ?? '';
+        String fullName = '$firstName $lastName';
 
-        //Check if the query returned any documents
-        if (querySnapshot.docs.isNotEmpty) {
-          DocumentSnapshot<Map<String, dynamic>> userDoc =
-              querySnapshot.docs.first;
-
-          //Update the controller values with the retrieved data
-          String firstName = userDoc['first name'] ?? '';
-          String lastName = userDoc['last name'] ?? '';
-
-          setState(() {
-            nameController.text = '$firstName $lastName';
-          });
-        }
+        setState(() {
+          nameController.text = fullName;
+        });
       }
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('Error fetching user details: $e');
     }
   }
 
@@ -215,9 +209,34 @@ class _UserPageState extends State<UserPage> {
                   ),
                 ),
                 Gap(height * 0.015),
+                //TODO Become a Landlord
                 InkWell(
-                  // TODO Landlord Route
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: true).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const BecomeLandlordPage(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.fastOutSlowIn;
+                          return SlideTransition(
+                            position: Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve))
+                                .animate(
+                                  CurvedAnimation(
+                                    parent: animation,
+                                    curve: const Interval(0.0, 0.55),
+                                  ),
+                                ),
+                            child: child,
+                          );
+                        },
+                        transitionDuration: const Duration(milliseconds: 500),
+                      ),
+                    );
+                  },
                   child: const MyUserComponent(
                     text: 'Become a Landlord',
                     icon: CupertinoIcons.person_fill,
@@ -228,12 +247,31 @@ class _UserPageState extends State<UserPage> {
                   color: userSheet,
                 ),
                 Gap(height * 0.01),
+                //TODO Payments Method
                 InkWell(
-                  // TODO Payment Methods Route
                   onTap: () {
                     Navigator.of(context, rootNavigator: true).push(
-                      MaterialPageRoute(
-                        builder: (context) => const PaymentMethodsPage(),
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const PaymentMethodsPage(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.fastOutSlowIn;
+                          return SlideTransition(
+                            position: Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve))
+                                .animate(
+                                  CurvedAnimation(
+                                    parent: animation,
+                                    curve: const Interval(0.0, 0.55),
+                                  ),
+                                ),
+                            child: child,
+                          );
+                        },
+                        transitionDuration: const Duration(milliseconds: 500),
                       ),
                     );
                   },
@@ -255,11 +293,31 @@ class _UserPageState extends State<UserPage> {
                   ),
                 ),
                 Gap(height * 0.015),
+                //TODO Notifications Page
                 InkWell(
                   onTap: () {
                     Navigator.of(context, rootNavigator: true).push(
-                      MaterialPageRoute(
-                        builder: (context) => const NotificationsPage(),
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const NotificationsPage(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.fastOutSlowIn;
+                          return SlideTransition(
+                            position: Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve))
+                                .animate(
+                                  CurvedAnimation(
+                                    parent: animation,
+                                    curve: const Interval(0.0, 0.55),
+                                  ),
+                                ),
+                            child: child,
+                          );
+                        },
+                        transitionDuration: const Duration(milliseconds: 500),
                       ),
                     );
                   },
@@ -274,8 +332,33 @@ class _UserPageState extends State<UserPage> {
                 ),
                 Gap(height * 0.01),
                 InkWell(
-                  // TODO Feedback Route
-                  onTap: () {},
+                  // TODO Feedback Page
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: true).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const FeedbackPage(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.fastOutSlowIn;
+                          return SlideTransition(
+                            position: Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve))
+                                .animate(
+                                  CurvedAnimation(
+                                    parent: animation,
+                                    curve: const Interval(0.0, 0.55),
+                                  ),
+                                ),
+                            child: child,
+                          );
+                        },
+                        transitionDuration: const Duration(milliseconds: 500),
+                      ),
+                    );
+                  },
                   child: const MyUserComponent(
                     text: 'Feedback',
                     icon: CupertinoIcons.envelope_fill,
@@ -287,8 +370,33 @@ class _UserPageState extends State<UserPage> {
                 ),
                 Gap(height * 0.01),
                 InkWell(
-                  // TODO User Feedback Route
-                  onTap: () {},
+                  // TODO User Support Page
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: true).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const SupportPage(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.fastOutSlowIn;
+                          return SlideTransition(
+                            position: Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve))
+                                .animate(
+                                  CurvedAnimation(
+                                    parent: animation,
+                                    curve: const Interval(0.0, 0.55),
+                                  ),
+                                ),
+                            child: child,
+                          );
+                        },
+                        transitionDuration: const Duration(milliseconds: 500),
+                      ),
+                    );
+                  },
                   child: const MyUserComponent(
                     text: 'User Support',
                     icon: CupertinoIcons.person_circle_fill,

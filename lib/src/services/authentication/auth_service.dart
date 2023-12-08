@@ -7,6 +7,9 @@ class AuthService extends ChangeNotifier {
 
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
+  final CollectionReference users =
+      FirebaseFirestore.instance.collection('users');
+
   //Login user
   Future<UserCredential> signInWithEmailAndPassword(
       String email, String password) async {
@@ -18,19 +21,17 @@ class AuthService extends ChangeNotifier {
         password: password,
       );
 
-      _fireStore.collection('users').doc(userCredential.user!.uid).set({
+      users.doc(userCredential.user!.uid).set({
         'uid': userCredential.user!.uid,
       }, SetOptions(merge: true));
 
       return userCredential;
-    }
-    //Catch errors
-    on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
     }
   }
 
-  //Create new user
+  //Create new user with additional details
   Future<UserCredential> signUpUserWithEmailAndPassword(
       String email, password, firstName, lastName, number) async {
     try {
@@ -47,53 +48,50 @@ class AuthService extends ChangeNotifier {
         'first name': firstName,
         'last name': lastName,
         'number': number,
-        'address': null,
+        'address': "",
       });
 
       return userCredential;
-    }
-    //Catch errors
-    on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
     }
   }
 
-  //Update Profile
-  Future<void> updateProfile(
-    String userID, {
-    String? newEmail,
-    String? newNumber,
-    String? newAddress,
-  }) async {
+  //Read User Details
+  Future<Map<String, dynamic>?> getUserDetails(String userID) async {
     try {
-      // Reference to the user's document in Firestore
-      DocumentReference<Map<String, dynamic>> userDocRef =
-          FirebaseFirestore.instance.collection('users').doc(userID);
+      DocumentSnapshot userSnapshot = await users.doc(userID).get();
 
-      // Create a map with fields to update
-      Map<String, dynamic> updates = {};
-
-      // Add new email to updates if provided
-      if (newEmail != null) {
-        updates['email'] = newEmail;
-      }
-
-      // Add new number to updates if provided
-      if (newNumber != null) {
-        updates['number'] = newNumber;
-      }
-
-      // Add new address to updates if provided
-      if (newAddress != null) {
-        updates['address'] = newAddress;
-      }
-
-      // Update the document in Firestore
-      await userDocRef.update(updates);
+      return userSnapshot.exists
+          ? userSnapshot.data() as Map<String, dynamic>
+          : null;
     } catch (e) {
-      debugPrint(e.toString());
-      // Handle the error as needed
+      debugPrint('Error getting user details: $e');
+      return null;
     }
+  }
+
+  //Update User Details
+  Future<void> updateProfile(
+    String userId,
+    String newEmail,
+    String newNumber,
+    String newAddress,
+  ) async {
+    try {
+      await users.doc(userId).update({
+        'email': newEmail,
+        'number': newNumber,
+        'address': newAddress,
+      });
+    } catch (e) {
+      debugPrint('Error updating user profile: $e');
+    }
+  }
+
+  //Delete User
+  Future<void> deleteUser(String docID) {
+    return users.doc(docID).delete();
   }
 
   //Logout user

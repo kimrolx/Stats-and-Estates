@@ -31,7 +31,7 @@ class PaymentMethodsPage extends StatelessWidget {
             Navigator.of(context).pop();
           },
           icon: Icon(
-            CupertinoIcons.arrow_left,
+            CupertinoIcons.back,
             color: buttonColor,
             size: width * 0.075,
           ),

@@ -16,6 +16,8 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   bool isSwitched = false;
 
+  bool isLongPressed = false;
+
   //Controllers
   final searchController = TextEditingController();
   final nameController = TextEditingController();
@@ -39,62 +41,75 @@ class _MapPageState extends State<MapPage> {
         }
       },
       child: Scaffold(
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FloatingActionButton(
-              heroTag: 'info_button',
-              backgroundColor: navigationBarColor,
-              onPressed: () {
-                showModalBottomSheet(
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  context: context,
-                  builder: (context) => const MyBottomSheetContents(),
-                );
-              },
-              child: Icon(
-                CupertinoIcons.info,
-                color: Colors.white,
-                size: width * 0.07,
+        floatingActionButton: Visibility(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton(
+                heroTag: 'info_button',
+                backgroundColor: navigationBarColor,
+                onPressed: () {
+                  showModalBottomSheet(
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    context: context,
+                    builder: (context) => const MyBottomSheetContents(),
+                  );
+                },
+                child: Icon(
+                  CupertinoIcons.info,
+                  color: Colors.white,
+                  size: width * 0.07,
+                ),
               ),
-            ),
-            Gap(height * 0.02),
-            FloatingActionButton(
-              heroTag: 'add_button',
-              backgroundColor: navigationBarColor,
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => MyRentalForm(
-                      nameController: nameController,
-                      barangayController: barangayController,
-                      streetController: streetController,
-                      cityController: cityController,
-                      provinceController: provinceController,
-                      codeController: codeController,
-                      priceController: priceController,
-                    ),
+              Gap(height * 0.02),
+              //TODO
+              Visibility(
+                visible: isLongPressed,
+                child: FloatingActionButton(
+                  heroTag: 'add_button',
+                  backgroundColor: navigationBarColor,
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => MyRentalForm(
+                          nameController: nameController,
+                          barangayController: barangayController,
+                          streetController: streetController,
+                          cityController: cityController,
+                          provinceController: provinceController,
+                          codeController: codeController,
+                          priceController: priceController,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Icon(
+                    CupertinoIcons.add,
+                    color: Colors.white,
+                    size: width * 0.07,
                   ),
-                );
-              },
-              child: Icon(
-                CupertinoIcons.add,
-                color: Colors.white,
-                size: width * 0.07,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         body: Stack(
           children: [
-            InteractiveViewer(
-              constrained: false,
-              scaleEnabled: true,
-              child: Center(
-                child: Image.asset(
-                  'assets/images/map.png',
-                  fit: BoxFit.contain,
+            GestureDetector(
+              onLongPress: () {
+                setState(() {
+                  isLongPressed = !isLongPressed;
+                });
+              },
+              child: InteractiveViewer(
+                constrained: false,
+                scaleEnabled: true,
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/map.png',
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),

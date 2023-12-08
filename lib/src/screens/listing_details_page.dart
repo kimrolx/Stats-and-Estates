@@ -5,6 +5,8 @@ import 'package:gap/gap.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
 import 'package:stats_and_estates/src/models/listing_details.dart';
 import 'package:stats_and_estates/src/models/listings.dart';
+import 'package:stats_and_estates/src/screens/chat_page.dart';
+import 'package:stats_and_estates/src/screens/main_page.dart';
 import 'package:stats_and_estates/src/widgets/amenities_builder.dart';
 import 'package:stats_and_estates/src/widgets/back_button_builder.dart';
 import 'package:stats_and_estates/src/widgets/carousel_builder.dart';
@@ -23,6 +25,9 @@ class ListingDetailsPage extends StatefulWidget {
 
 class _ListingDetailsPageState extends State<ListingDetailsPage> {
   bool isBookMarked = false;
+
+  bool isLongPressed = false;
+  bool isTapped = false;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +51,15 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
             height: height,
             color: Colors.transparent,
           ),
-          MyCarousel(imagePaths: images),
+          GestureDetector(
+            //TODO
+            onLongPress: () {
+              setState(() {
+                isLongPressed = !isLongPressed;
+              });
+            },
+            child: MyCarousel(imagePaths: images),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: width * 0.07,
@@ -56,14 +69,42 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const MyBackButton(),
-                  MyFavoritesButton(
-                    isBookMarked: isBookMarked,
-                    onTap: () {
-                      setState(() {
-                        isBookMarked = !isBookMarked;
-                      });
-                    },
-                  ),
+                  //TODO
+                  isLongPressed
+                      ? GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => const MenuDialog(),
+                            );
+                          },
+                          child: Container(
+                            width: width * 0.14,
+                            height: height * 0.06,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: buttonColor,
+                            ),
+                            child: Center(
+                              child: Icon(
+                                CupertinoIcons.ellipsis,
+                                size: width * 0.07,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Visibility(
+                          visible: !isLongPressed,
+                          child: MyFavoritesButton(
+                            isBookMarked: isBookMarked,
+                            onTap: () {
+                              setState(() {
+                                isBookMarked = !isBookMarked;
+                              });
+                            },
+                          ),
+                        ),
                 ],
               ),
             ),
@@ -86,7 +127,7 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                   padding: EdgeInsets.only(
                     left: width * 0.06,
                     right: width * 0.06,
-                    top: height * 0.025,
+                    top: height * 0.015,
                     bottom: height * 0.08,
                   ),
                   child: SingleChildScrollView(
@@ -94,6 +135,40 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        //TODO
+                        Center(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: width * 0.015,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white,
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isTapped = !isTapped;
+                                });
+                              },
+                              child: isTapped
+                                  ? Text(
+                                      'Occupied',
+                                      style: TextStyle(
+                                        fontFamily: 'DMSansBold',
+                                        fontSize: width * 0.035,
+                                      ),
+                                    )
+                                  : Text(
+                                      'Available',
+                                      style: TextStyle(
+                                        fontFamily: 'DMSansBold',
+                                        fontSize: width * 0.035,
+                                      ),
+                                    ),
+                            ),
+                          ),
+                        ),
                         Center(
                           child: Text(
                             widget.listingsContent.name,
@@ -166,13 +241,183 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
             left: width * 0.05,
             right: width * 0.05,
             bottom: height * 0.01,
-            child: const MyLandlordPost(
-              image: 'assets/images/signup_background.png',
-              name: 'Kim Berame',
-              date: 'November 17, 2023',
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ChatPage(tab: 2),
+                  ),
+                );
+              },
+              child: const MyLandlordPost(
+                image: 'assets/images/signup_background.png',
+                name: 'Kim Berame',
+                date: 'November 17, 2023',
+              ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+//TODO
+class MenuDialog extends StatelessWidget {
+  const MenuDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: width * 0.035,
+          vertical: height * 0.015,
+        ),
+        decoration: BoxDecoration(
+          color: splashColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: buttonColor,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              onPressed: () {},
+              child: Text(
+                'Edit Listing',
+                style: TextStyle(
+                  fontFamily: 'DMSansMedium',
+                  fontSize: width * 0.045,
+                ),
+              ),
+            ),
+            Gap(height * 0.015),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.red,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ConfirmDeleteDialog(),
+                  ),
+                );
+              },
+              child: Text(
+                'Delete Listing',
+                style: TextStyle(
+                  fontFamily: 'DMSansMedium',
+                  fontSize: width * 0.045,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+//TODO
+class ConfirmDeleteDialog extends StatelessWidget {
+  const ConfirmDeleteDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: width * 0.035,
+          vertical: height * 0.015,
+        ),
+        decoration: BoxDecoration(
+          color: splashColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              CupertinoIcons.delete,
+              size: width * 0.15,
+            ),
+            Gap(height * 0.01),
+            Text(
+              'Delete this accommodation listing?',
+              style:
+                  TextStyle(fontFamily: 'DMSansMedium', fontSize: width * 0.04),
+            ),
+            Gap(height * 0.01),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: buttonColor,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const MainPage(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'Yes',
+                    style: TextStyle(
+                      fontFamily: 'DMSansMedium',
+                      fontSize: width * 0.035,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'No',
+                    style: TextStyle(
+                      fontFamily: 'DMSansMedium',
+                      fontSize: width * 0.035,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
