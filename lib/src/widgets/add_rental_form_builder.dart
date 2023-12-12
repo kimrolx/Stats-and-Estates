@@ -12,29 +12,22 @@ import 'package:stats_and_estates/src/widgets/checkbox_builder.dart';
 import 'package:stats_and_estates/src/widgets/fields/listing_info_builder.dart';
 
 class MyRentalForm extends StatefulWidget {
-  final TextEditingController nameController;
-  final TextEditingController barangayController;
-  final TextEditingController streetController;
-  final TextEditingController cityController;
-  final TextEditingController provinceController;
-  final TextEditingController codeController;
-  final TextEditingController priceController;
-  const MyRentalForm({
-    super.key,
-    required this.nameController,
-    required this.barangayController,
-    required this.streetController,
-    required this.cityController,
-    required this.provinceController,
-    required this.codeController,
-    required this.priceController,
-  });
+  const MyRentalForm({super.key});
 
   @override
   State<MyRentalForm> createState() => _MyRentalFormState();
 }
 
 class _MyRentalFormState extends State<MyRentalForm> {
+  //Controllers
+  final nameController = TextEditingController();
+  final barangayController = TextEditingController();
+  final streetController = TextEditingController();
+  final cityController = TextEditingController();
+  final provinceController = TextEditingController();
+  final codeController = TextEditingController();
+  final priceController = TextEditingController();
+
   String _dropdownValue = 'Unit';
 
   String _accommodationTypeValue = 'Select Accommodation Type';
@@ -152,32 +145,32 @@ class _MyRentalFormState extends State<MyRentalForm> {
                                 ),
                                 Gap(height * 0.025),
                                 MyListingInfoField(
-                                  controller: widget.nameController,
+                                  controller: nameController,
                                   labelText: 'Name',
                                 ),
                                 Gap(height * 0.02),
                                 MyListingInfoField(
-                                  controller: widget.barangayController,
+                                  controller: barangayController,
                                   labelText: 'Barangay',
                                 ),
                                 Gap(height * 0.02),
                                 MyListingInfoField(
-                                  controller: widget.streetController,
+                                  controller: streetController,
                                   labelText: 'Street Address',
                                 ),
                                 Gap(height * 0.02),
                                 MyListingInfoField(
-                                  controller: widget.cityController,
+                                  controller: cityController,
                                   labelText: 'City',
                                 ),
                                 Gap(height * 0.02),
                                 MyListingInfoField(
-                                  controller: widget.provinceController,
+                                  controller: provinceController,
                                   labelText: 'Province',
                                 ),
                                 Gap(height * 0.02),
                                 MyListingInfoField(
-                                  controller: widget.codeController,
+                                  controller: codeController,
                                   labelText: 'Zip Code',
                                 ),
                                 Gap(height * 0.02),
@@ -185,7 +178,7 @@ class _MyRentalFormState extends State<MyRentalForm> {
                                   children: [
                                     Flexible(
                                       child: MyListingInfoField(
-                                        controller: widget.priceController,
+                                        controller: priceController,
                                         labelText: 'Price',
                                       ),
                                     ),
@@ -555,6 +548,10 @@ class _MyRentalFormState extends State<MyRentalForm> {
                     MyButton(
                       onPressed: () {
                         Navigator.of(context).pop();
+                        showDialog(
+                          context: context,
+                          builder: (context) => const ConfirmationDialog(),
+                        );
                       },
                       text: 'Done',
                     ),
@@ -563,6 +560,50 @@ class _MyRentalFormState extends State<MyRentalForm> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+//TODO
+class ConfirmationDialog extends StatelessWidget {
+  const ConfirmationDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: width * 0.035,
+          vertical: height * 0.015,
+        ),
+        decoration: BoxDecoration(
+          color: splashColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              CupertinoIcons.add_circled_solid,
+              size: width * 0.15,
+              color: navigationBarColor,
+            ),
+            Gap(height * 0.005),
+            Text(
+              'Accommodation Successfully Added!',
+              style: TextStyle(
+                fontFamily: 'DMSansMedium',
+                fontSize: width * 0.045,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );

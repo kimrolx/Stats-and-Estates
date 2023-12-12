@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:stats_and_estates/src/constants/colors.dart';
+import 'package:stats_and_estates/src/services/notifications/notification_service.dart';
 import 'package:stats_and_estates/src/widgets/stepper_verification_builder.dart';
 
 class HigherVerificationPage extends StatelessWidget {
@@ -115,7 +116,13 @@ class HigherVerificationPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        NotificationService.showNotification(
+                          title: 'Congratulations!',
+                          body:
+                              'You have successfully enhanced your verification level!',
+                        );
+                      },
                       child: Text(
                         'Start Verification Process',
                         style: TextStyle(

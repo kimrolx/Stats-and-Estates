@@ -11,7 +11,7 @@ class AuthService extends ChangeNotifier {
       FirebaseFirestore.instance.collection('users');
 
   //Login user
-  Future<UserCredential> signInWithEmailAndPassword(
+  Future<UserCredential> signInUserWithEmailAndPassword(
       String email, String password) async {
     try {
       //Login
@@ -71,27 +71,49 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  //Update User Details
-  Future<void> updateProfile(
-    String userId,
-    String newEmail,
-    String newNumber,
-    String newAddress,
-  ) async {
+  //Update User Details in Firestore Database
+  Future<void> updateFirestoreUserDetails(String userId, String newEmail,
+      String newNumber, String newAddress) async {
     try {
       await users.doc(userId).update({
         'email': newEmail,
         'number': newNumber,
         'address': newAddress,
       });
-    } catch (e) {
-      debugPrint('Error updating user profile: $e');
+    } catch (error) {
+      debugPrint('Error deleting user details: $error');
     }
   }
 
-  //Delete User
-  Future<void> deleteUser(String docID) {
-    return users.doc(docID).delete();
+  //Update User Details in Firebase Authentication
+  Future<void> updateUserFromFirebaseAuth(String newEmail) async {
+    try {
+      User? currentUser = _firebaseAuth.currentUser;
+
+      await currentUser?.updateEmail(newEmail);
+    } catch (error) {
+      debugPrint('Error deleting user from auth: $error');
+    }
+  }
+
+  //Delete User from Firestore Database
+  Future<void> deleteFirestoreUserDetails(String docID) async {
+    try {
+      await users.doc(docID).delete();
+    } catch (error) {
+      debugPrint('Error deleting user details: $error');
+    }
+  }
+
+  //Delete User from Firebase Authentication
+  Future<void> deleteUserFromFirebaseAuth() async {
+    try {
+      User? currentUser = _firebaseAuth.currentUser;
+
+      await currentUser?.delete();
+    } catch (error) {
+      debugPrint('Error deleting user from auth: $error');
+    }
   }
 
   //Logout user

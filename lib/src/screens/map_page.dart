@@ -20,13 +20,6 @@ class _MapPageState extends State<MapPage> {
 
   //Controllers
   final searchController = TextEditingController();
-  final nameController = TextEditingController();
-  final barangayController = TextEditingController();
-  final streetController = TextEditingController();
-  final cityController = TextEditingController();
-  final provinceController = TextEditingController();
-  final codeController = TextEditingController();
-  final priceController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -72,15 +65,7 @@ class _MapPageState extends State<MapPage> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => MyRentalForm(
-                          nameController: nameController,
-                          barangayController: barangayController,
-                          streetController: streetController,
-                          cityController: cityController,
-                          provinceController: provinceController,
-                          codeController: codeController,
-                          priceController: priceController,
-                        ),
+                        builder: (context) => const MyRentalForm(),
                       ),
                     );
                   },

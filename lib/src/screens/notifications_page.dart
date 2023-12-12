@@ -227,22 +227,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
                               ),
                             ],
                           ),
-                          Gap(height * 0.015),
-                          Row(
-                            children: [
-                              const Icon(CupertinoIcons.device_phone_portrait),
-                              Gap(width * 0.01),
-                              Text(
-                                'In-App Notifications',
-                                style: TextStyle(
-                                  fontFamily: 'DMSansMedium',
-                                  fontSize: width * 0.04,
-                                ),
-                              ),
-                              const Spacer(),
-                              const Icon(CupertinoIcons.forward),
-                            ],
-                          ),
                         ],
                       ),
                     ),

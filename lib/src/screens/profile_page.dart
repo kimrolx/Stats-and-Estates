@@ -26,7 +26,6 @@ class _ProfilePageState extends State<ProfilePage> {
   final addressController = TextEditingController();
 
   String currentUser = FirebaseAuth.instance.currentUser?.uid ?? "";
-  String userEmail = FirebaseAuth.instance.currentUser?.email ?? "";
 
   final AuthService _authService = AuthService();
 
@@ -80,7 +79,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   isEditable = !isEditable;
                 });
                 if (isEditable) {
-                  // If in edit mode, and there are changes, save it.
                   String newEmail = emailController.text;
                   String newNumber = numberController.text;
                   String newAddress = addressController.text;
@@ -88,24 +86,20 @@ class _ProfilePageState extends State<ProfilePage> {
                   final authService =
                       Provider.of<AuthService>(context, listen: false);
 
-                  // Check if any other edits have been made
-                  bool editsMade = newEmail != userEmail.trim() ||
-                      newNumber != numberController.text ||
-                      newAddress != addressController.text;
+                  await authService.updateFirestoreUserDetails(
+                    currentUser,
+                    newEmail,
+                    newNumber,
+                    newAddress,
+                  );
 
-                  if (editsMade) {
-                    await authService.updateProfile(
-                      currentUser,
-                      newEmail,
-                      newNumber,
-                      newAddress,
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Profile updated successfully!'),
-                      ),
-                    );
-                  }
+                  await authService.updateUserFromFirebaseAuth(newEmail);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Profile updated successfully!'),
+                    ),
+                  );
                 }
               },
               child: isEditable
@@ -220,7 +214,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => const MenuDialog(),
+                      builder: (context) => const ConfirmDeleteDialog(),
                     );
                   },
                   child: Text(
@@ -241,14 +235,14 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-class MenuDialog extends StatefulWidget {
-  const MenuDialog({super.key});
+class ConfirmDeleteDialog extends StatefulWidget {
+  const ConfirmDeleteDialog({super.key});
 
   @override
-  State<MenuDialog> createState() => _MenuDialogState();
+  State<ConfirmDeleteDialog> createState() => _ConfirmDeleteDialogState();
 }
 
-class _MenuDialogState extends State<MenuDialog> {
+class _ConfirmDeleteDialogState extends State<ConfirmDeleteDialog> {
   String currentUser = FirebaseAuth.instance.currentUser?.uid ?? "";
 
   //Delete User
@@ -259,7 +253,8 @@ class _MenuDialogState extends State<MenuDialog> {
 
     currentIndexProvider.updateIndex(0);
 
-    authService.deleteUser(currentUser);
+    authService.deleteFirestoreUserDetails(currentUser);
+    authService.deleteUserFromFirebaseAuth();
 
     Navigator.of(context, rootNavigator: true).pushReplacement(
       MaterialPageRoute(

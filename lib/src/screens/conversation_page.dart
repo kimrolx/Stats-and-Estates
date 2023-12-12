@@ -11,6 +11,7 @@ import 'package:stats_and_estates/src/services/chat/chat_service.dart';
 import 'package:stats_and_estates/src/utils/image_picker_util.dart';
 import 'package:stats_and_estates/src/widgets/chat_bubble_builder.dart';
 import 'package:stats_and_estates/src/widgets/fields/text_chat_field.dart';
+import 'package:stats_and_estates/src/widgets/user_components_builder.dart';
 
 class ConversationPage extends StatefulWidget {
   final String receiverUserName;
@@ -166,7 +167,9 @@ class _ConversationPageState extends State<ConversationPage> {
           backgroundColor: backgroundColor,
           actions: <Widget>[
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                //TODO
+              },
               icon: const Icon(CupertinoIcons.phone_fill),
             ),
           ],
@@ -184,14 +187,52 @@ class _ConversationPageState extends State<ConversationPage> {
               Gap(height * 0.01),
               InkWell(
                 //TODO
-                onTap: () {},
-                child: Text(
-                  widget.receiverUserName,
-                  style: TextStyle(
-                    fontFamily: 'DMSansBold',
-                    fontSize: width * 0.045,
-                    color: Colors.black,
-                  ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          const ConversationOptions(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        const begin = Offset(1.0, 0.0);
+                        const end = Offset.zero;
+                        const curve = Curves.fastOutSlowIn;
+                        return SlideTransition(
+                          position: Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve))
+                              .animate(
+                                CurvedAnimation(
+                                  parent: animation,
+                                  curve: const Interval(0.0, 0.55),
+                                ),
+                              ),
+                          child: child,
+                        );
+                      },
+                      transitionDuration: const Duration(milliseconds: 500),
+                    ),
+                  );
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.receiverUserName,
+                      style: TextStyle(
+                        fontFamily: 'DMSansBold',
+                        fontSize: width * 0.045,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      'Online',
+                      style: TextStyle(
+                        fontFamily: 'DMSansBold',
+                        fontSize: width * 0.035,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
               )
             ],
@@ -206,6 +247,64 @@ class _ConversationPageState extends State<ConversationPage> {
 
             //User Input
             buildMessageInput(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ConversationOptions extends StatelessWidget {
+  const ConversationOptions({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+        backgroundColor: backgroundColor,
+        leading: IconButton(
+          icon: const Icon(CupertinoIcons.back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: width * 0.025,
+                vertical: height * 0.015,
+              ),
+              child: Container(
+                width: width,
+                padding: EdgeInsets.symmetric(
+                  horizontal: width * 0.02,
+                  vertical: height * 0.01,
+                ),
+                decoration: BoxDecoration(
+                  color: splashColor,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: const Column(
+                  children: [
+                    MyUserComponent(
+                      text: 'Block',
+                      icon: CupertinoIcons.minus_circle_fill,
+                    ),
+                    MyUserComponent(
+                      text: 'Report',
+                      icon: CupertinoIcons.exclamationmark_triangle_fill,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

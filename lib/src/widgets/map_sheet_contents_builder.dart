@@ -24,7 +24,7 @@ class MyBottomSheetContents extends StatefulWidget {
 }
 
 class _MyBottomSheetContentsState extends State<MyBottomSheetContents> {
-  bool isSwitched = false;
+  bool isSwitched = true;
 
   List<ListingsContent> favoritesData = ListingsProvider.getListingsContent();
   List<ListingDetails> listingDetails =

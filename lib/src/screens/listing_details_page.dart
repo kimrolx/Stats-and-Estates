@@ -7,6 +7,7 @@ import 'package:stats_and_estates/src/models/listing_details.dart';
 import 'package:stats_and_estates/src/models/listings.dart';
 import 'package:stats_and_estates/src/screens/chat_page.dart';
 import 'package:stats_and_estates/src/screens/main_page.dart';
+import 'package:stats_and_estates/src/widgets/add_rental_form_builder.dart';
 import 'package:stats_and_estates/src/widgets/amenities_builder.dart';
 import 'package:stats_and_estates/src/widgets/back_button_builder.dart';
 import 'package:stats_and_estates/src/widgets/carousel_builder.dart';
@@ -102,6 +103,13 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
                               setState(() {
                                 isBookMarked = !isBookMarked;
                               });
+                              if (isBookMarked) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      const SavedConfirmationDialog(),
+                                );
+                              }
                             },
                           ),
                         ),
@@ -263,6 +271,48 @@ class _ListingDetailsPageState extends State<ListingDetailsPage> {
 }
 
 //TODO
+class SavedConfirmationDialog extends StatelessWidget {
+  const SavedConfirmationDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: width * 0.035,
+          vertical: height * 0.015,
+        ),
+        decoration: BoxDecoration(
+          color: splashColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              CupertinoIcons.heart_fill,
+              size: width * 0.2,
+              color: navigationBarColor,
+            ),
+            Text(
+              'Accommodation Saved!',
+              style: TextStyle(
+                fontFamily: 'DMSansMedium',
+                fontSize: width * 0.045,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+//TODO
 class MenuDialog extends StatelessWidget {
   const MenuDialog({super.key});
 
@@ -293,7 +343,13 @@ class MenuDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const MyRentalForm(),
+                  ),
+                );
+              },
               child: Text(
                 'Edit Listing',
                 style: TextStyle(

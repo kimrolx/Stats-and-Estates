@@ -31,7 +31,7 @@ class _VerificationStepperWidgetState extends State<VerificationStepperWidget> {
       unreachedStepTextColor: splashColor,
       activeStepTextColor: Colors.black,
       finishedStepTextColor: Colors.black87,
-      activeStepBackgroundColor: splashColor,
+      activeStepBackgroundColor: navigationBarColor,
       finishedStepBackgroundColor: navigationBarColor,
       unreachedStepBackgroundColor: Colors.transparent,
       internalPadding: 0,

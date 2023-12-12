@@ -247,7 +247,6 @@ class _UserPageState extends State<UserPage> {
                   color: userSheet,
                 ),
                 Gap(height * 0.01),
-                //TODO Payments Method
                 InkWell(
                   onTap: () {
                     Navigator.of(context, rootNavigator: true).push(

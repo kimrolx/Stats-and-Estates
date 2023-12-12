@@ -34,7 +34,7 @@ class _LandingPageState extends State<LandingPage> {
     final authService = Provider.of<AuthService>(context, listen: false);
 
     try {
-      await authService.signInWithEmailAndPassword(
+      await authService.signInUserWithEmailAndPassword(
         _emailController.text,
         _passwordController.text,
       );

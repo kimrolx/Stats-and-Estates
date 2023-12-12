@@ -100,7 +100,13 @@ class FeedbackPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) =>
+                              const SubmitFeedbackSuggestion(text: 'Feedback'),
+                        );
+                      },
                       child: Text(
                         'Submit Feedback',
                         style: TextStyle(
@@ -163,7 +169,13 @@ class FeedbackPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => const SubmitFeedbackSuggestion(
+                              text: 'Suggestion'),
+                        );
+                      },
                       child: Text(
                         'Submit Suggestion',
                         style: TextStyle(
@@ -177,6 +189,77 @@ class FeedbackPage extends StatelessWidget {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class SubmitFeedbackSuggestion extends StatefulWidget {
+  final String text;
+  const SubmitFeedbackSuggestion({super.key, required this.text});
+
+  @override
+  State<SubmitFeedbackSuggestion> createState() =>
+      _SubmitFeedbackSuggestionState();
+}
+
+class _SubmitFeedbackSuggestionState extends State<SubmitFeedbackSuggestion> {
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: width * 0.035,
+          vertical: height * 0.015,
+        ),
+        decoration: BoxDecoration(
+          color: splashColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Your ${widget.text} has been submitted!',
+              style: TextStyle(
+                fontFamily: 'DMSansBold',
+                fontSize: width * 0.05,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            Gap(height * 0.02),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: buttonColor,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'Confirm',
+                    style: TextStyle(
+                      fontFamily: 'DMSansMedium',
+                      fontSize: width * 0.045,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
