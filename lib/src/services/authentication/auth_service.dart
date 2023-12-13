@@ -86,7 +86,7 @@ class AuthService extends ChangeNotifier {
   }
 
   //Update User Details in Firebase Authentication
-  Future<void> updateUserFromFirebaseAuth(String newEmail) async {
+  Future<void> updateFromFirebaseAuth(String newEmail) async {
     try {
       User? currentUser = _firebaseAuth.currentUser;
 
@@ -106,7 +106,7 @@ class AuthService extends ChangeNotifier {
   }
 
   //Delete User from Firebase Authentication
-  Future<void> deleteUserFromFirebaseAuth() async {
+  Future<void> deleteUserFromAuth() async {
     try {
       User? currentUser = _firebaseAuth.currentUser;
 

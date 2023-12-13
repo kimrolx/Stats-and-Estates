@@ -17,7 +17,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  bool isEditable = true;
+  bool isEditable = false;
 
   //Controllers
   final nameController = TextEditingController();
@@ -93,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     newAddress,
                   );
 
-                  await authService.updateUserFromFirebaseAuth(newEmail);
+                  await authService.updateFromFirebaseAuth(newEmail);
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
@@ -104,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
               },
               child: isEditable
                   ? Text(
-                      'Edit',
+                      'Save',
                       style: TextStyle(
                         fontFamily: 'DMSansRegular',
                         fontSize: width * 0.04,
@@ -112,7 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     )
                   : Text(
-                      'Save',
+                      'Edit',
                       style: TextStyle(
                         fontFamily: 'DMSansRegular',
                         fontSize: width * 0.04,
@@ -191,17 +191,17 @@ class _ProfilePageState extends State<ProfilePage> {
                               labelText: 'Name'),
                           Gap(height * 0.03),
                           MyUserInfoField(
-                              isReadOnly: isEditable,
+                              isReadOnly: !isEditable,
                               controller: emailController,
                               labelText: 'Email'),
                           Gap(height * 0.03),
                           MyUserInfoField(
-                              isReadOnly: isEditable,
+                              isReadOnly: !isEditable,
                               controller: numberController,
                               labelText: 'Contact Number'),
                           Gap(height * 0.03),
                           MyUserInfoField(
-                              isReadOnly: isEditable,
+                              isReadOnly: !isEditable,
                               controller: addressController,
                               labelText: 'Address'),
                         ],
@@ -254,7 +254,7 @@ class _ConfirmDeleteDialogState extends State<ConfirmDeleteDialog> {
     currentIndexProvider.updateIndex(0);
 
     authService.deleteFirestoreUserDetails(currentUser);
-    authService.deleteUserFromFirebaseAuth();
+    authService.deleteUserFromAuth();
 
     Navigator.of(context, rootNavigator: true).pushReplacement(
       MaterialPageRoute(
